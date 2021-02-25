@@ -13,14 +13,13 @@ import SearchBar from "C:/Users/shrey/FreightApp/components/Searchbar.js";
 const Home = (props) => {
   return (
     <View>
+      <RaspberryStrip />
       <SearchBar />
-      <Text>Yoynmvcnmnmcmnmnvnmmoyo</Text>
       {/* <View style={{height: Dimensions.get('window').height - 400}}> */}
       {/* <HomeMap /> */}
       {/* </View>  */}
       {/* <Carousel data={dummyData}/> */}
       {/* <Image source={taxiimg} style={{ width: 305, height: 159 }} />  */}
-      <RaspberryStrip />
 
       {/*  Bottom Comp*/}
     </View>
