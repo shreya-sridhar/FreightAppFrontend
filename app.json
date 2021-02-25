@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "DoneWithIt",
+    "slug": "DoneWithIt",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff",
+      "ios": {
+        "config": {
+          "googleMapsApiKey": "AIzaSyBGN57DmIxX4TF-37jbH1JA_ymN-Nm6Ij4"
+        }
+      },
+      "android": {
+        "config": {
+          "googleMaps": {
+            "apiKey": "AIzaSyBGN57DmIxX4TF-37jbH1JA_ymN-Nm6Ij4"
+          }
+        }
+      }
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "donewithit.com"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
