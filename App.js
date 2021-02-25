@@ -1,15 +1,20 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View, Dimensions } from "react-native";
-import MapView from "C:/Users/shrey/FreightApp/node_modules/react-native-maps";
+import { StyleSheet, View,Text } from "react-native";
 import Home from "./pages/home.js";
+// import Main from "./pages/main.js";
+import { Video } from "expo-av";
+import VideoPlayer from 'expo-video-player'
+// import Navigator from './routes/homeStack'
 
 export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <MapView style={styles.map} />
-      <Home />
+      {/* <Navigator /> */}
+      <Home/>
+      
+      {/* <Main/> */}
     </View>
   );
 }
@@ -20,9 +25,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-  },
-  map: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
   },
 });
