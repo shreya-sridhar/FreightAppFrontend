@@ -58,14 +58,14 @@ const Booking = ({ origin, destination }) => {
         strokeWidth={5}
         strokeColor="black"
       />
-      <Marker
+      {/* <Marker
         coordinate={origin}
         title={'Origin'}
       />
       <Marker
         coordinate={destination}
         title={"Destination"}
-      />
+      /> */}
     </MapView>
 
   );

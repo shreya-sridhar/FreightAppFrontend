@@ -14,18 +14,32 @@ import VideoPlayer from "expo-video-player";
 // const Stack = createStackNavigator();
 
 const App = () => {
+  var currentdate = new Date();
+  var datetime =
+    "Last Sync: " +
+    currentdate.getDate() +
+    "/" +
+    (currentdate.getMonth() + 1) +
+    "/" +
+    currentdate.getFullYear() +
+    " @ " +
+    currentdate.getHours() +
+    ":" +
+    currentdate.getMinutes() +
+    ":" +
+    currentdate.getSeconds();
+  console.log(datetime);
   return (
     <>
-    <View style={styles.container}>
-      {/* <StatusBar style="auto" /> */}
-      {/* <Navigator /> */}
-      {/* <Home /> */}
-      {/* <HomeMap/> */}
-      {/* <FindPlaces /> */}
-      {/* <Main/> */}
-      {/* <Booking origin={"Bangalore"} destination={"Mysore"} /> */}
-    </View>
-
+      <View style={styles.container}>
+        {/* <StatusBar style="auto" /> */}
+        {/* <Navigator /> */}
+        {/* <Home /> */}
+        {/* <HomeMap/> */}
+        {/* <FindPlaces /> */}
+        {/* <Main/> */}
+        <Booking origin={"Bangalore"} destination={"Mysore"} />
+      </View>
 
       {/* <Stack.Navigator
         screenOptions={{
@@ -38,12 +52,12 @@ const App = () => {
       </Stack.Navigator>*/}
     </>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding:0,
+    padding: 0,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
@@ -51,9 +65,3 @@ const styles = StyleSheet.create({
 });
 
 export default App;
-
-
-
-
-
-
