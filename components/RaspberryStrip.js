@@ -8,9 +8,8 @@ const RaspberryStrip = (props) => {
     <View style={styles.container}>
       <Text style={styles.title}>Travel only if necessary</Text>
       <Text style={styles.text}>
-        Upgrading this package often requires the font files linked to your projects to be updated as well. If the automatic linking works for you, running this again should update the fonts.
+        Upgrading this package often requires the font files linked to your projects to be updated
       </Text>
-      <Text style={styles.learnMore}>Learn more</Text>
     </View>
   );
 };
@@ -18,13 +17,13 @@ const RaspberryStrip = (props) => {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#8a307f',
-    padding: 15,
+    padding: 5,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
   title: {
     color: 'white',
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: 'bold',
     marginBottom: 10,
   },

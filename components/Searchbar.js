@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, Pressable, StyleSheet } from "react-native";
+import { View, Text, Pressable, StyleSheet,Dimensions } from "react-native";
 
 import AntDesign from "react-native-vector-icons/AntDesign";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
@@ -51,12 +51,14 @@ const SearchBar = (props) => {
 
 const styles = StyleSheet.create({
     inputBox: {
-      backgroundColor: '#e7e7e7',
+      // backgroundColor: '#e7e7e7',
       margin: 10,
-      padding: 10,
+      borderColor:"black",
+      paddingTop: 15,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
+      width:Dimensions.get('window').width/1.2
     },
     inputText: {
       fontSize: 20,
@@ -67,7 +69,6 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-between',
       width: 100,
-      padding: 10,
       backgroundColor: '#fff',
       borderRadius: 50
     },
@@ -75,13 +76,13 @@ const styles = StyleSheet.create({
     row: {
       flexDirection: 'row',
       alignItems: 'center',
-      padding: 20,
+      padding: 5,
       borderBottomWidth: 1,
       borderColor: '#dbdbdb',
     },
     iconContainer: {
       backgroundColor: '#b3b3b3',
-      padding: 10,
+      padding: 5,
       borderRadius: 25,
     },
     destinationText: {
