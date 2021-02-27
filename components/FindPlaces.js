@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, TextInput, StyleSheet,SafeAreaView,Text} from 'react-native';
+import {View, TextInput, StyleSheet,SafeAreaView,Text,Button} from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 // import { useNavigation } from '@react-navigation/native';
 // import PlaceRow from "./PlaceRow";
@@ -92,7 +92,7 @@ const FindPlaces = (props) => {
 
         {/* Square near Destination input */}
         <View style={styles.square} />
-
+        <Button title="CONFIRM PICKUP TIME"  onPress={() => props.navigation.navigate("Booking")}/>
       </View>
     </SafeAreaView>
   );

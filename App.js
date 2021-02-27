@@ -8,60 +8,73 @@ import FindPlaces from "C:/Users/shrey/FreightApp/components/FindPlaces.js";
 import Booking from "C:/Users/shrey/FreightApp/components/Booking.js";
 import { Video } from "expo-av";
 import VideoPlayer from "expo-video-player";
-// import { createStackNavigator } from 'react-navigation-stack'
+import {createAppContainer} from "react-navigation"
+import { createStackNavigator } from 'react-navigation-stack'
 // // import Navigator from './routes/homeStack'
 
 // const Stack = createStackNavigator();
 
-const App = () => {
-  var currentdate = new Date();
-  var datetime =
-    "Last Sync: " +
-    currentdate.getDate() +
-    "/" +
-    (currentdate.getMonth() + 1) +
-    "/" +
-    currentdate.getFullYear() +
-    " @ " +
-    currentdate.getHours() +
-    ":" +
-    currentdate.getMinutes() +
-    ":" +
-    currentdate.getSeconds();
-  console.log(datetime);
-  return (
-    <>
-      <View style={styles.container}>
-        {/* <StatusBar style="auto" /> */}
-        {/* <Navigator /> */}
-        {/* <Home /> */}
-        {/* <HomeMap/> */}
-        {/* <FindPlaces /> */}
-        {/* <Main/> */}
-        <Booking origin={"Bangalore"} destination={"Mysore"} />
-      </View>
+// const App = () => {
+//   var currentdate = new Date();
+//   var datetime =
+//     "Last Sync: " +
+//     currentdate.getDate() +
+//     "/" +
+//     (currentdate.getMonth() + 1) +
+//     "/" +
+//     currentdate.getFullYear() +
+//     " @ " +
+//     currentdate.getHours() +
+//     ":" +
+//     currentdate.getMinutes() +
+//     ":" +
+//     currentdate.getSeconds();
+//   console.info(datetime);
+//   return (
+//     <>
+//       <View style={styles.container}>
+//         {/* <StatusBar style="auto" /> */}
+//         {/* <Navigator /> */}
+//         {/* <Home /> */}
+//         {/* <HomeMap/> */}
+//         <AppNavigator/>
+//         {/* <FindPlaces /> */}
+//         {/* <Main/> */}
+//         {/* <Booking origin={"Bangalore"} destination={"Mysore"} /> */}
+//       </View>
 
-      {/* <Stack.Navigator
-        screenOptions={{
-        headerShown: false,
-        }}
-        >
-          <Stack.Screen name={"Home"} component={Home} />
-          <Stack.Screen name={"Main"} component={Main} />
-          <Stack.Screen name={"HomeMap"} component={HomeMap} />
-      </Stack.Navigator>*/}
-    </>
-  );
-};
+//       {/* <Stack.Navigator
+//         screenOptions={{
+//         headerShown: false,
+//         }}
+//         >
+//           <Stack.Screen name={"Home"} component={Home} />
+//           <Stack.Screen name={"Main"} component={Main} />
+//           <Stack.Screen name={"HomeMap"} component={HomeMap} />
+//       </Stack.Navigator>*/}
+//     </>
+//   );
+// };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 0,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     padding: 0,
+//     backgroundColor: "#fff",
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+// });
+
+const AppNavigator = createStackNavigator({
+  // HomeMap : {screen:HomeMap},
+  FindPlaces:{screen:FindPlaces},
+  Booking:{screen:Booking},
+  // Main : {screen:Main},
+})
+
+const App = createAppContainer(AppNavigator);
 
 export default App;
+
+

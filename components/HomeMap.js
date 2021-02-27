@@ -104,7 +104,7 @@ export default class HomeMap extends React.Component {
       ))}
     </MapView>
     <RaspberryStrip />
-    <Button title="CONFIRM PICKUP TIME"  onPress={() => this.props.navigation.navigate('Main')}/>
+    <Button title="CONFIRM PICKUP TIME"  onPress={() => this.props.navigation.navigate("Booking")}/>
     </>
   );}
 };
