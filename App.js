@@ -2,10 +2,11 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import Home from "C:/Users/shrey/FreightApp/pages/home.js";
-import Main from "C:/Users/shrey/FreightApp/pages/main.js";
+import Main from "./pages/Main.js";
 import HomeMap from "C:/Users/shrey/FreightApp/components/HomeMap.js";
 import FindPlaces from "C:/Users/shrey/FreightApp/components/FindPlaces.js";
 import Booking from "C:/Users/shrey/FreightApp/components/Booking.js";
+import Cars from "C:/Users/shrey/FreightApp/components/Cars.js";
 import { Video } from "expo-av";
 import VideoPlayer from "expo-video-player";
 import {createAppContainer} from "react-navigation"
@@ -67,10 +68,11 @@ import { createStackNavigator } from 'react-navigation-stack'
 // });
 
 const AppNavigator = createStackNavigator({
-  // HomeMap : {screen:HomeMap},
+  Main : {screen:Main},
+  HomeMap : {screen:HomeMap},
   FindPlaces:{screen:FindPlaces},
   Booking:{screen:Booking},
-  // Main : {screen:Main},
+  Cars:{screen:Cars}
 })
 
 const App = createAppContainer(AppNavigator);

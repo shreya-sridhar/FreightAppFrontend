@@ -2,8 +2,9 @@ import React from "react";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import Geocoder from "react-native-geocoding";
-import {StyleSheet,Image} from "react-native";
+import {StyleSheet,Image,Text} from "react-native";
 import img from 'C:/Users/shrey/FreightApp/assets/images/comfort.jpeg';
+import Cars from 'C:/Users/shrey/FreightApp/components/Cars.js';
 
 const GOOGLE_MAPS_APIKEY = "AIzaSyC0UZckU_eK8heofiWpXTUYU-IpJo0KhnI";
 
@@ -36,6 +37,7 @@ const Booking = ({ origin, destination }) => {
     .catch((error) => console.warn(error));
 
   return (
+  <>
     <MapView
       style={{width: '100%', height: '54%'}}
       provider={PROVIDER_GOOGLE}
@@ -70,9 +72,10 @@ const Booking = ({ origin, destination }) => {
         strokeWidth={5}
         strokeColor="black"
       />
-  
-
       </MapView>
+      <Text>Select Car Type</Text>
+      <Cars/>
+    </>
   );
 };
 

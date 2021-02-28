@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Image,Text, Button,Dimensions,TouchableOpacity } from "react-native";
+import { Image,Text, Button,Dimensions,TouchableOpacity, Switch,View} from "react-native";
 import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import img from 'C:/Users/shrey/FreightApp/assets/images/comfort.jpeg';
-import SearchBar from "C:/Users/shrey/FreightApp/components/Searchbar.js";
+import FindPlaces from "C:/Users/shrey/FreightApp/components/FindPlaces.js";
 import RaspberryStrip from "C:/Users/shrey/FreightApp/components/RaspberryStrip.js";
 import {Permissions} from 'expo-permissions'
 import {Location} from 'expo-location'
 import { render } from "react-dom";
+
 
 const cars = [
     {
@@ -43,8 +44,16 @@ export default class HomeMap extends React.Component {
  
     state = {
 		latitude: null,
-        longitude:null
+        longitude:null,
+        switchValue: false
 	};
+
+  toggleSwitch = value => {
+    //onValueChange of the switch this function will be called
+    this.setState({ switchValue: value });
+    //state changes according to switch
+    //which will result in re-render the text
+  };
 
 	// findCoordinates = () => {
 	// 	navigator.geolocation.getCurrentPosition(
@@ -71,7 +80,15 @@ export default class HomeMap extends React.Component {
   render(){
   return (
       <>
-    <SearchBar />
+      <View style={{display:"inlineBlock"}}>
+    <Text>{this.state.switchValue ? 'You are now a Driver' : 'You are now a Passenger'}</Text>
+    <Switch
+          style={{ marginTop: 30 }}
+          onValueChange={this.toggleSwitch}
+          value={this.state.switchValue}
+        />
+        </View>
+    <FindPlaces />
     <Text>{JSON.stringify(this.state.location)}</Text>
     <MapView
       style={{width: '100%', height: '54%'}}
@@ -108,6 +125,9 @@ export default class HomeMap extends React.Component {
     </>
   );}
 };
+
+
+
 
 
 

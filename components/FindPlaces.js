@@ -83,7 +83,6 @@ const FindPlaces = (props) => {
           }}
           // renderRow={(data) => <PlaceRow data={data} />}
         />
-        <Text>Helooooo</Text>
         {/* Circle near Origin input */}
         <View style={styles.circle} />
 
@@ -92,7 +91,7 @@ const FindPlaces = (props) => {
 
         {/* Square near Destination input */}
         <View style={styles.square} />
-        <Button title="CONFIRM PICKUP TIME"  onPress={() => props.navigation.navigate("Booking")}/>
+       
       </View>
     </SafeAreaView>
   );
@@ -100,9 +99,11 @@ const FindPlaces = (props) => {
 
 const styles = StyleSheet.create({
     container: {
-      padding: 10,
-      height: '100%',
-      width:'100%'
+      padding: 0,
+      height: '20%',
+      width:'100%',
+      // z-index:1
+      zIndex:1
     },
     textInput: {
       padding: 10,
