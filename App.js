@@ -4,6 +4,7 @@ import { StyleSheet, View, Text } from "react-native";
 import Home from "C:/Users/shrey/FreightApp/pages/home.js";
 import Main from "./pages/Main.js";
 import HomeMap from "C:/Users/shrey/FreightApp/components/HomeMap.js";
+// import History from "C:/Users/shrey/FreightApp/components/History.js";
 import FindPlaces from "C:/Users/shrey/FreightApp/components/FindPlaces.js";
 import Booking from "C:/Users/shrey/FreightApp/components/Booking.js";
 import Cars from "C:/Users/shrey/FreightApp/components/Cars.js";
@@ -69,14 +70,17 @@ import { createStackNavigator } from 'react-navigation-stack'
 
 const AppNavigator = createStackNavigator({
   Main : {screen:Main},
+  // History:{screen:History}
   HomeMap : {screen:HomeMap},
   FindPlaces:{screen:FindPlaces},
   Booking:{screen:Booking},
   Cars:{screen:Cars}
 })
 
+
 const App = createAppContainer(AppNavigator);
 
 export default App;
+
 
 

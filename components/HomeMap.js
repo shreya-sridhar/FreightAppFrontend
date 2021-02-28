@@ -80,7 +80,7 @@ export default class HomeMap extends React.Component {
   render(){
   return (
       <>
-      <View style={{display:"inlineBlock"}}>
+      <View>
     <Text>{this.state.switchValue ? 'You are now a Driver' : 'You are now a Passenger'}</Text>
     <Switch
           style={{ marginTop: 30 }}
