@@ -1,79 +1,48 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text,Button } from "react-native";
 import Home from "C:/Users/shrey/FreightApp/pages/home.js";
 import Main from "./pages/Main.js";
 import HomeMap from "C:/Users/shrey/FreightApp/components/HomeMap.js";
-// import History from "C:/Users/shrey/FreightApp/components/History.js";
+import History from "C:/Users/shrey/FreightApp/components/History.js";
+import Earnings from "C:/Users/shrey/FreightApp/components/Earnings.js";
 import FindPlaces from "C:/Users/shrey/FreightApp/components/FindPlaces.js";
 import Booking from "C:/Users/shrey/FreightApp/components/Booking.js";
 import Cars from "C:/Users/shrey/FreightApp/components/Cars.js";
-import { Video } from "expo-av";
-import VideoPlayer from "expo-video-player";
+import DrawerContent from "C:/Users/shrey/FreightApp/DrawerContent.js";
+// import { Video } from "expo-av";
+// import VideoPlayer from "expo-video-player";
 import {createAppContainer} from "react-navigation"
 import { createStackNavigator } from 'react-navigation-stack'
+import { createDrawerNavigator } from '@react-navigation/drawer';
 // // import Navigator from './routes/homeStack'
 
-// const Stack = createStackNavigator();
 
-// const App = () => {
-//   var currentdate = new Date();
-//   var datetime =
-//     "Last Sync: " +
-//     currentdate.getDate() +
-//     "/" +
-//     (currentdate.getMonth() + 1) +
-//     "/" +
-//     currentdate.getFullYear() +
-//     " @ " +
-//     currentdate.getHours() +
-//     ":" +
-//     currentdate.getMinutes() +
-//     ":" +
-//     currentdate.getSeconds();
-//   console.info(datetime);
-//   return (
-//     <>
-//       <View style={styles.container}>
-//         {/* <StatusBar style="auto" /> */}
-//         {/* <Navigator /> */}
-//         {/* <Home /> */}
-//         {/* <HomeMap/> */}
-//         <AppNavigator/>
-//         {/* <FindPlaces /> */}
-//         {/* <Main/> */}
-//         {/* <Booking origin={"Bangalore"} destination={"Mysore"} /> */}
-//       </View>
+import { NavigationContainer } from '@react-navigation/native';
 
-//       {/* <Stack.Navigator
-//         screenOptions={{
-//         headerShown: false,
-//         }}
-//         >
-//           <Stack.Screen name={"Home"} component={Home} />
-//           <Stack.Screen name={"Main"} component={Main} />
-//           <Stack.Screen name={"HomeMap"} component={HomeMap} />
-//       </Stack.Navigator>*/}
-//     </>
-//   );
-// };
+const Drawer = createDrawerNavigator();
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     padding: 0,
-//     backgroundColor: "#fff",
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-// });
+function DrawerFunc() {
+  return (
+    // <DrawerContent/>
+    <NavigationContainer>
+      <Drawer.Navigator initialRouteName="HomeMap">
+      <Drawer.Screen name="Book A Truck" component={HomeMap} />
+        <Drawer.Screen name="Earnings" component={Earnings} />
+        {/* <Drawer.Screen name="FindPlaces" component={FindPlaces} /> */}
+        <Drawer.Screen name="History" component={History} />
+        <Drawer.Screen name="Booking" component={Booking} />
+      </Drawer.Navigator>
+    </NavigationContainer>
+  );
+}
 
 const AppNavigator = createStackNavigator({
-  Main : {screen:Main},
+//   Main : {screen:Main},
   // History:{screen:History}
-  HomeMap : {screen:HomeMap},
+  HomeMap : {name:"HomeMap", screen:DrawerFunc},
   FindPlaces:{screen:FindPlaces},
-  Booking:{screen:Booking},
+  Booking:{name:"Booking", screen:Booking},
   Cars:{screen:Cars}
 })
 
@@ -81,6 +50,7 @@ const AppNavigator = createStackNavigator({
 const App = createAppContainer(AppNavigator);
 
 export default App;
+
 
 
 

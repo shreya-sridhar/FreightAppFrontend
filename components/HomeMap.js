@@ -4,6 +4,7 @@ import MapView, {PROVIDER_GOOGLE, Marker} from 'react-native-maps';
 import img from 'C:/Users/shrey/FreightApp/assets/images/comfort.jpeg';
 import FindPlaces from "C:/Users/shrey/FreightApp/components/FindPlaces.js";
 import RaspberryStrip from "C:/Users/shrey/FreightApp/components/RaspberryStrip.js";
+import Booking from "C:/Users/shrey/FreightApp/components/Booking.js";
 import {Permissions} from 'expo-permissions'
 import {Location} from 'expo-location'
 import { render } from "react-dom";
@@ -91,7 +92,7 @@ export default class HomeMap extends React.Component {
     <FindPlaces />
     <Text>{JSON.stringify(this.state.location)}</Text>
     <MapView
-      style={{width: '100%', height: '54%'}}
+      style={{width: '100%', height: '34%'}}
       provider={PROVIDER_GOOGLE}
       showsUserLocation={true}
       initialRegion={{
@@ -121,10 +122,12 @@ export default class HomeMap extends React.Component {
       ))}
     </MapView>
     <RaspberryStrip />
-    <Button title="CONFIRM PICKUP TIME"  onPress={() => this.props.navigation.navigate("Booking")}/>
+    <Button title="CONFIRM PICKUP TIME"  onPress={() => this.props.navigation.navigate('Booking')}
+    />
     </>
   );}
 };
+
 
 
 
