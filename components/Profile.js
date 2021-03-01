@@ -19,7 +19,7 @@ import {
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-export default function DrawerContent() {
+export default function Profile() {
   return (
     // <DrawerContentScrollView>
       <View
@@ -146,4 +146,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
   },
 });
+
+
+
 

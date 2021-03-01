@@ -8,7 +8,7 @@ import Booking from "C:/Users/shrey/FreightApp/components/Booking.js";
 import {Permissions} from 'expo-permissions'
 import {Location} from 'expo-location'
 import { render } from "react-dom";
-
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const cars = [
     {
@@ -79,9 +79,11 @@ export default class HomeMap extends React.Component {
     }
 
   render(){
+    debugger
   return (
       <>
       <View>
+      <Icon name='bell' style={{ fontSize: 25 }} />
     <Text>{this.state.switchValue ? 'You are now a Driver' : 'You are now a Passenger'}</Text>
     <Switch
           style={{ marginTop: 30 }}
@@ -90,9 +92,9 @@ export default class HomeMap extends React.Component {
         />
         </View>
     <FindPlaces />
-    <Text>{JSON.stringify(this.state.location)}</Text>
+    <Text>{JSON.stringify(this.state.location)}</Text> 
     <MapView
-      style={{width: '100%', height: '34%'}}
+      style={{width: '100%', height: '44%'}}
       provider={PROVIDER_GOOGLE}
       showsUserLocation={true}
       initialRegion={{
@@ -122,8 +124,7 @@ export default class HomeMap extends React.Component {
       ))}
     </MapView>
     <RaspberryStrip />
-    <Button title="CONFIRM PICKUP TIME"  onPress={() => this.props.navigation.navigate('Booking')}
-    />
+    <Button title="CONFIRM PICKUP TIME"  onPress={() => this.props.navigation.navigate('Booking')} />
     </>
   );}
 };

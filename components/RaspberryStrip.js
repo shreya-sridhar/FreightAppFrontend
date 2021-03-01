@@ -6,7 +6,7 @@ import {StyleSheet} from 'react-native';
 const RaspberryStrip = (props) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Travel only if necessary</Text>
+      <Text style={styles.title}>Deliver Now at Discounted Rates!</Text>
       <Text style={styles.text}>
         Upgrading this package often requires the font files linked to your projects to be updated
       </Text>

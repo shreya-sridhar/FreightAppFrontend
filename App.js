@@ -2,14 +2,15 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { StyleSheet, View, Text,Button } from "react-native";
 import Home from "C:/Users/shrey/FreightApp/pages/home.js";
-import Main from "./pages/Main.js";
+import Main from "./pages/Main.js"; 
 import HomeMap from "C:/Users/shrey/FreightApp/components/HomeMap.js";
 import History from "C:/Users/shrey/FreightApp/components/History.js";
 import Earnings from "C:/Users/shrey/FreightApp/components/Earnings.js";
 import FindPlaces from "C:/Users/shrey/FreightApp/components/FindPlaces.js";
+import Profile from "C:/Users/shrey/FreightApp/components/Profile.js";
 import Booking from "C:/Users/shrey/FreightApp/components/Booking.js";
 import Cars from "C:/Users/shrey/FreightApp/components/Cars.js";
-import DrawerContent from "C:/Users/shrey/FreightApp/DrawerContent.js";
+import DrawerFunc from "C:/Users/shrey/FreightApp/Drawer.js";
 // import { Video } from "expo-av";
 // import VideoPlayer from "expo-video-player";
 import {createAppContainer} from "react-navigation"
@@ -20,37 +21,51 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import { NavigationContainer } from '@react-navigation/native';
 
-const Drawer = createDrawerNavigator();
+const ridesUrl = "http://localhost:3000/rides"
+const usersUrl = "http://localhost:3000/users"
 
-function DrawerFunc() {
-  return (
-    // <DrawerContent/>
-    <NavigationContainer>
-      <Drawer.Navigator initialRouteName="HomeMap">
-      <Drawer.Screen name="Book A Truck" component={HomeMap} />
-        <Drawer.Screen name="Earnings" component={Earnings} />
-        {/* <Drawer.Screen name="FindPlaces" component={FindPlaces} /> */}
-        <Drawer.Screen name="History" component={History} />
-        <Drawer.Screen name="Booking" component={Booking} />
-      </Drawer.Navigator>
-    </NavigationContainer>
-  );
+
+class App extends React.Component{
+
+  state = {
+    users:[],
+    rides:[]
+  }
+
+  componentDidMount() {
+   
+
+    fetch("http://localhost:3001/users")
+    .then(res => res.json())
+    .then(data1 => fetch("http://localhost:3001/rides")
+    .then(res => res.json())
+    .then(data2 => {
+      this.setState(
+        {
+        users:data1,
+        rides:data2,
+      })}))
+    }
+
+
+   AppNavigator = createAppContainer(createStackNavigator({
+    
+    //   Main : {screen:Main},
+      // History:{screen:History}
+      HomeMap : {name:"HomeMap", screen:DrawerFunc}
+      FindPlaces:{screen:FindPlaces},
+      Booking:{name:"Booking", screen:Booking},
+      Cars:{screen:Cars}
+    }))
+
+    render(){
+      return(
+        <this.AppNavigator/>
+      )
+    }
 }
 
-const AppNavigator = createStackNavigator({
-//   Main : {screen:Main},
-  // History:{screen:History}
-  HomeMap : {name:"HomeMap", screen:DrawerFunc},
-  FindPlaces:{screen:FindPlaces},
-  Booking:{name:"Booking", screen:Booking},
-  Cars:{screen:Cars}
-})
-
-
-const App = createAppContainer(AppNavigator);
-
 export default App;
-
 
 
 
