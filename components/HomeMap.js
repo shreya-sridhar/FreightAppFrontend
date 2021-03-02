@@ -8,8 +8,9 @@ import Booking from "C:/Users/shrey/FreightApp/components/Booking.js";
 import {Permissions} from 'expo-permissions'
 import {Location} from 'expo-location'
 import { render } from "react-dom";
+import Geocoder from "react-native-geocoding";
 import Icon from 'react-native-vector-icons/FontAwesome5';
-
+const GOOGLE_MAPS_APIKEY = "AIzaSyC0UZckU_eK8heofiWpXTUYU-IpJo0KhnI";
 const cars = [
     {
       id: '0',
@@ -59,6 +60,18 @@ export default class HomeMap extends React.Component {
     //which will result in re-render the text
   };
 
+setLocation = () => {
+  console.log(this.state.origin)
+  Geocoder.init(GOOGLE_MAPS_APIKEY);
+  Geocoder.from(this.state.origin)
+    .then((json) => {
+      console.log(this.state.origin)
+      let location = json.results[0].geometry.location;
+      this.setState({ latitude:location.lat,longitude:location.lng })
+    })
+    .catch((error) => console.warn(error));
+}
+
 
     componentDidMount(){
         navigator.geolocation.getCurrentPosition(
@@ -79,15 +92,14 @@ export default class HomeMap extends React.Component {
     }
 
     setOrigin = (data,details) => {
-      this.setState({origin: data.description})
+      this.setState({origin: details})
     }
    
     setDestination = (data,details) => {
-      this.setState({destination:data.description})
+      this.setState({destination:details})
     }
 
   render(){
-  console.log(this.props.name)
   return (
       <>
       <View>
@@ -100,7 +112,6 @@ export default class HomeMap extends React.Component {
         />
         </View>
     <FindPlaces latitude = {this.state.latitude} longitude = {this.state.longitude} searchFocused = {this.searchFocused} onFocus = {this.onFocus} onBlur = {this.onBlur} setOrigin = {this.setOrigin} setDestination = {this.setDestination} destination = {this.destination}/>
-    <Text>{JSON.stringify(this.state.location)}</Text> 
     <MapView
       style={{width: '100%', height: '44%'}}
       provider={PROVIDER_GOOGLE}
@@ -133,13 +144,12 @@ export default class HomeMap extends React.Component {
     </MapView>
     {/* <Text>{this.props.navigation}</Text> */}
     <RaspberryStrip />
-    <Button title="CONFIRM PICKUP TIME"  onPress={() => this.props.navigation.navigate('Booking', { origin:this.state.origin, destination: this.state.destination })} />
+    <View onPress = {() => this.setLocation}>
+    <Button title="CONFIRM PICKUP TIME"  onPress={() => this.props.navigation.navigate('Booking', { origin:this.state.origin, destination: this.state.destination, id:this.props.id })} />
+    </View>
     </>
   );}
 };
-
-
-
 
 
 

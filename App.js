@@ -49,7 +49,7 @@ class App extends React.Component{
     
       // Main : {screen:Main},
       // History:{screen:History}
-      HomeMap : {name:"HomeMap", screen: (routerprops) => DrawerFunc({name:"Shreya",...routerprops })},
+      HomeMap : {name:"HomeMap", screen: (routerprops) => DrawerFunc({id:21,cars:this.state.users,...routerprops })},
       FindPlaces:{screen:FindPlaces},
       Booking:{name:"Booking", screen:Booking},
       Cars:{screen:Cars}
