@@ -80,7 +80,7 @@
 
 
 import React, { Component } from 'react';
-import { View, Text, ScrollView, Linking } from 'react-native';
+import { View, Text, ScrollView, Linking, Image } from 'react-native';
 import { Card, Button } from 'react-native-elements'; // 0.19.0
 
 import { FontAwesome } from '@expo/vector-icons'; // 6.2.2
@@ -136,9 +136,18 @@ class Store extends Component {
       <View style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
           {images.map(({ name, uri, url, key }) => (
-            <Card image={uri} key={key}>
+            <Card key={key}>
+               <Image
+            style={{
+              width: 70,
+              height: 70,
+              resizeMode: 'contain'
+            }}
+            source={uri}
+          />   
               <Text style={{ marginBottom: 10 }}>
-                Photo by {name}.
+                Photo by Jim.
+
               </Text>
               <Button
                 buttonStyle={{backgroundColor: "#03A9F4"}}

@@ -11,18 +11,18 @@ import { NavigationContainer } from '@react-navigation/native';
 
 const Drawer = createDrawerNavigator();
 
-function DrawerFunc() {
+function DrawerFunc(props) {
     
   return (
     // <DrawerContent/>
     <NavigationContainer>
       <Drawer.Navigator initialRouteName="HomeMap">
-      <Drawer.Screen name="Book A Truck" component={HomeMap} />
+      <Drawer.Screen name="Book A Truck" component={() => <HomeMap {...props} />} />
+      {/* screen: (props) => <MyNotificationsScreen {...props} propName={val1} /> */}
         <Drawer.Screen name="Earnings" component={Earnings} />
         {/* <Drawer.Screen name="FindPlaces" component={FindPlaces} /> */}
         <Drawer.Screen name="History" component={History} />
         <Drawer.Screen name="Profile" component={Profile} />
-        <Drawer.Screen name="Booking" component={Booking} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

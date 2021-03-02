@@ -46,7 +46,10 @@ export default class HomeMap extends React.Component {
     state = {
 		latitude: null,
         longitude:null,
-        switchValue: false
+        switchValue: false,
+          searchFocused: false,
+          destination: "",
+          origin: "",
 	};
 
   toggleSwitch = value => {
@@ -56,17 +59,6 @@ export default class HomeMap extends React.Component {
     //which will result in re-render the text
   };
 
-	// findCoordinates = () => {
-	// 	navigator.geolocation.getCurrentPosition(
-	// 		position => {
-	// 			const location = JSON.stringify(position);
-
-	// 			this.setState({ location });
-	// 		},
-	// 		error => Alert.alert(error.message),
-	// 		{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-	// 	);
-	// };
 
     componentDidMount(){
         navigator.geolocation.getCurrentPosition(
@@ -78,8 +70,24 @@ export default class HomeMap extends React.Component {
 		);
     }
 
+    onFocus = () => {
+      this.setState({ searchFocused: true });
+    }
+
+    onBlur = () => {
+      this.setState({ searchFocused: false });
+    }
+
+    setOrigin = (data,details) => {
+      this.setState({origin: data.description})
+    }
+   
+    setDestination = (data,details) => {
+      this.setState({destination:data.description})
+    }
+
   render(){
-    debugger
+  console.log(this.props.name)
   return (
       <>
       <View>
@@ -91,16 +99,16 @@ export default class HomeMap extends React.Component {
           value={this.state.switchValue}
         />
         </View>
-    <FindPlaces />
+    <FindPlaces latitude = {this.state.latitude} longitude = {this.state.longitude} searchFocused = {this.searchFocused} onFocus = {this.onFocus} onBlur = {this.onBlur} setOrigin = {this.setOrigin} setDestination = {this.setDestination} destination = {this.destination}/>
     <Text>{JSON.stringify(this.state.location)}</Text> 
     <MapView
       style={{width: '100%', height: '44%'}}
       provider={PROVIDER_GOOGLE}
       showsUserLocation={true}
       initialRegion={{
-        latitude: 28.450627,
-        //{this.state.latitude}
-        longitude: -16.263045,
+        // placeId: this.state.sourceId,
+        latitude: this.state.latitude,
+        longitude: this.state.longitude,
         latitudeDelta: 0.0222,
         longitudeDelta: 0.0121,
       }}>
@@ -123,8 +131,9 @@ export default class HomeMap extends React.Component {
         </Marker>
       ))}
     </MapView>
+    {/* <Text>{this.props.navigation}</Text> */}
     <RaspberryStrip />
-    <Button title="CONFIRM PICKUP TIME"  onPress={() => this.props.navigation.navigate('Booking')} />
+    <Button title="CONFIRM PICKUP TIME"  onPress={() => this.props.navigation.navigate('Booking', { origin:this.state.origin, destination: this.state.destination })} />
     </>
   );}
 };

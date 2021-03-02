@@ -8,36 +8,44 @@ import Cars from 'C:/Users/shrey/FreightApp/components/Cars.js';
 
 const GOOGLE_MAPS_APIKEY = "AIzaSyC0UZckU_eK8heofiWpXTUYU-IpJo0KhnI";
 
-const Booking = ({ origin, destination }) => {
+const Booking = ({route,navigation }) => {
   let start_lat = 0
   let start_lng = 0
   let end_lat = 0
   let end_lng = 0
+  // const { origin, destination } = route.params;
+  const origin = navigation.getParam('origin')
+  const destination = navigation.getParam('destination')
 
-  Geocoder.init(GOOGLE_MAPS_APIKEY);
-  Geocoder.from(origin)
-    .then((json) => {
-      console.log(start_lat,start_lng);
-      var location = json.results[0].geometry.location;
-      start_lat = location.lat;
-      start_lng = location.lng;
-      console.log(start_lat,start_lng);
-    })
-    .catch((error) => console.warn(error));
+  // Geocoder.init(GOOGLE_MAPS_APIKEY);
+  // Geocoder.from(origin)
+  //   .then((json) => {
+  //     console.log(start_lat,start_lng);
+  //     console.log(origin)
+  //     var location = json.results[0].geometry.location;
+  //     start_lat = location.lat;
+  //     start_lng = location.lng;
+  //     console.log(start_lat,start_lng);
+  //   })
+  //   .catch((error) => console.warn(error));
 
-  Geocoder.init(GOOGLE_MAPS_APIKEY);
-  Geocoder.from(destination)
-    .then((json) => {
-      console.log(end_lat,end_lng);
-      var location = json.results[0].geometry.location;
-      end_lat = location.lat;
-      end_lng = location.lng;
-      console.log(end_lat,end_lng);
-    })
-    .catch((error) => console.warn(error));
+  // Geocoder.init(GOOGLE_MAPS_APIKEY);
+  // Geocoder.from(destination)
+  //   .then((json) => {
+  //     console.log(end_lat,end_lng);
+  //     console.log(destination)
+  //     var location = json.results[0].geometry.location;
+  //     end_lat = location.lat;
+  //     end_lng = location.lng;
+  //     console.log(end_lat,end_lng);
+  //   })
+  //   .catch((error) => console.warn(error));
 
   return (
+    // console.log(route)
+  // console.log(route.params.origin)
   <>
+  <Text>{navigation.getParam('origin')}</Text>
     <MapView
       style={{width: '100%', height: '54%'}}
       provider={PROVIDER_GOOGLE}
@@ -57,14 +65,14 @@ const Booking = ({ origin, destination }) => {
           coordinate={{latitude: 28.450627, longitude: -16.263045}}
         //   title={'Origin'}
         ></Marker>
-          {/* <Image
+          <Image
             style={{
               width: 70,
               height: 70,
               resizeMode: 'contain'
             }}
             source={img}
-          />    */}
+          />   
      <MapViewDirections
         origin={{latitude: 28.456312, longitude: -16.252929}}
         destination={{latitude: 28.450627, longitude: -16.263045}}
@@ -74,6 +82,7 @@ const Booking = ({ origin, destination }) => {
       />
       </MapView>
       <Text>Select Car Type</Text>
+      <Text>{origin}</Text>
       <Cars/>
     </>
   );

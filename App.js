@@ -33,8 +33,6 @@ class App extends React.Component{
   }
 
   componentDidMount() {
-   
-
     fetch("http://localhost:3001/users")
     .then(res => res.json())
     .then(data1 => fetch("http://localhost:3001/rides")
@@ -47,12 +45,11 @@ class App extends React.Component{
       })}))
     }
 
-
    AppNavigator = createAppContainer(createStackNavigator({
     
-    //   Main : {screen:Main},
+      // Main : {screen:Main},
       // History:{screen:History}
-      HomeMap : {name:"HomeMap", screen:DrawerFunc}
+      HomeMap : {name:"HomeMap", screen: (routerprops) => DrawerFunc({name:"Shreya",...routerprops })},
       FindPlaces:{screen:FindPlaces},
       Booking:{name:"Booking", screen:Booking},
       Cars:{screen:Cars}
