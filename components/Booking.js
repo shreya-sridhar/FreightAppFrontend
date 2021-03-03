@@ -13,7 +13,6 @@ const Booking = ({route,navigation }) => {
   // let start_lng = 0
   // let end_lat = 0
   // let end_lng = 0
-  console.log("nav",navigation)
   const [start_lat, setStartLat] = useState(28.456312)
   const [start_lng, setStartLng] = useState(-16.252929)
   const [end_lat, setEndLat] = useState(28.450627)
@@ -23,6 +22,7 @@ const Booking = ({route,navigation }) => {
   const origin = navigation.getParam('origin')
   const destination = navigation.getParam('destination')
   const id = navigation.getParam('id')
+  const users = navigation.getParam('users')
 
   useEffect(() => {
     Geocoder.init(GOOGLE_MAPS_APIKEY);
@@ -30,23 +30,23 @@ const Booking = ({route,navigation }) => {
       .then((json1) =>{Geocoder.init(GOOGLE_MAPS_APIKEY);
       Geocoder.from(destination)
         .then((json2) => {
-          console.log(end_lat,end_lng);
-          console.log(destination)
+          // console.log(end_lat,end_lng);
+          // console.log(destination)
           var location = json2.results[0].geometry.location;
           let end_lat = location.lat;
           let end_lng = location.lng;
           setEndLat(end_lat)
           setEndLng(end_lng)
-          console.log(end_lat,end_lng);
+          // console.log(end_lat,end_lng);
 
-          console.log("hi",start_lat,start_lng);
-          console.log("hello",origin)
+          // console.log("hi",start_lat,start_lng);
+          // console.log("hello",origin)
           var location = json1.results[0].geometry.location;
           let start_lat = location.lat;
           let start_lng = location.lng;
           setStartLat(start_lat)
           setStartLng(start_lng)
-          console.log("done",start_lat,start_lng);
+          // console.log("done",start_lat,start_lng);
         })})
   },[])
 
@@ -83,19 +83,24 @@ const Booking = ({route,navigation }) => {
           />  
       <Text>{start_lat} {start_lng}</Text>
       <Text>{end_lat} {end_lng}</Text> 
-     <MapViewDirections
+     {/* <MapViewDirections
         origin={{latitude: start_lat, longitude: start_lng}}
         destination={{latitude: end_lat, longitude: end_lng}}
         apikey={GOOGLE_MAPS_APIKEY}
         strokeWidth={5}
         strokeColor="black"
-      />
+      /> */}
       </MapView>
       <Text>Select Car Type</Text>
       <Text>{origin}</Text>
       <Text>{destination}</Text>
       <Cars/>
-      <Button title="CONFIRM BOOKING" onPress={() => navigation.navigate('ConfirmBooking')}/>
+      <Button title="CONFIRM BOOKING" onPress={() => navigation.navigate('ConfirmBooking',{
+                origin: origin,
+                destination: destination,
+                id: id,
+                users: users
+              })}/>
     </>
   );
 };

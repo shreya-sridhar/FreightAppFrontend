@@ -181,6 +181,7 @@ export default class HomeMap extends React.Component {
                 origin: this.state.origin,
                 destination: this.state.destination,
                 id: this.props.id,
+                users: this.props.users
               })
             }
           />
@@ -189,3 +190,10 @@ export default class HomeMap extends React.Component {
     );
   }
 }
+
+
+
+
+
+
+
