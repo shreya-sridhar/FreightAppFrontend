@@ -10,6 +10,7 @@ import {Location} from 'expo-location'
 import { render } from "react-dom";
 import Geocoder from "react-native-geocoding";
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import { faThList } from "@fortawesome/free-solid-svg-icons";
 const GOOGLE_MAPS_APIKEY = "AIzaSyC0UZckU_eK8heofiWpXTUYU-IpJo0KhnI";
 const cars = [
     {
@@ -51,6 +52,8 @@ export default class HomeMap extends React.Component {
           searchFocused: false,
           destination: "",
           origin: "",
+          vehicle_type:"",
+          users:this.props.users
 	};
 
   toggleSwitch = value => {
@@ -72,7 +75,6 @@ setLocation = () => {
     .catch((error) => console.warn(error));
 }
 
-
     componentDidMount(){
         navigator.geolocation.getCurrentPosition(
 			position => {
@@ -92,14 +94,15 @@ setLocation = () => {
     }
 
     setOrigin = (data,details) => {
-      this.setState({origin: details})
+      this.setState({origin: data.description})
     }
    
     setDestination = (data,details) => {
-      this.setState({destination:details})
+      this.setState({destination:data.description})
     }
 
   render(){
+  console.log(this.props.id)
   return (
       <>
       <View>
@@ -145,12 +148,11 @@ setLocation = () => {
     {/* <Text>{this.props.navigation}</Text> */}
     <RaspberryStrip />
     <View onPress = {() => this.setLocation}>
-    <Button title="CONFIRM PICKUP TIME"  onPress={() => this.props.navigation.navigate('Booking', { origin:this.state.origin, destination: this.state.destination, id:this.props.id })} />
+    <Button title="CONFIRM PICKUP TIME"  onPress={() => this.props.navigation.navigate('Booking', {origin:this.state.origin, destination: this.state.destination, id:this.props.id })} />
     </View>
     </>
   );}
 };
-
 
 
 

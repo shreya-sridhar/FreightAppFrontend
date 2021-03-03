@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import Geocoder from "react-native-geocoding";
-import {StyleSheet,Image,Text} from "react-native";
+import {StyleSheet,Image,Text,Button} from "react-native";
 import img from 'C:/Users/shrey/FreightApp/assets/images/comfort.jpeg';
 import Cars from 'C:/Users/shrey/FreightApp/components/Cars.js';
 
@@ -13,7 +13,7 @@ const Booking = ({route,navigation }) => {
   // let start_lng = 0
   // let end_lat = 0
   // let end_lng = 0
-
+  console.log("nav",navigation)
   const [start_lat, setStartLat] = useState(28.456312)
   const [start_lng, setStartLng] = useState(-16.252929)
   const [end_lat, setEndLat] = useState(28.450627)
@@ -24,66 +24,53 @@ const Booking = ({route,navigation }) => {
   const destination = navigation.getParam('destination')
   const id = navigation.getParam('id')
 
-  const originLoc = {
-    latitude: origin.geometry.location.lat,
-    longitude: origin.geometry.location.lng,
-  };
-
-  const destinationLoc = {
-    latitude: destination.geometry.location.lat,
-    longitude: destination.geometry.location.lng,
-  };
-
   useEffect(() => {
-    // Geocoder.init(GOOGLE_MAPS_APIKEY);
-    // Geocoder.from(origin)
-    //   .then((json) => {
-    //     console.log("hi",start_lat,start_lng);
-    //     console.log("hello",origin)
-    //     var location = json.results[0].geometry.location;
-    //     let start_lat = location.lat;
-    //     let start_lng = location.lng;
-    //     setStartLat(start_lat)
-    //     setStartLng(start_lng)
-    //     console.log("done",start_lat,start_lng);
-    //   })
-    //   .catch((error) => console.warn(error));
-  
-    // Geocoder.init(GOOGLE_MAPS_APIKEY);
-    // Geocoder.from(destination)
-    //   .then((json) => {
-    //     console.log(end_lat,end_lng);
-    //     console.log(destination)
-    //     var location = json.results[0].geometry.location;
-    //     let end_lat = location.lat;
-    //     let end_lng = location.lng;
-    //     setEndLat(end_lat)
-    //     setEndLng(end_lng)
-    //     console.log(end_lat,end_lng);
-    //   })
-    //   .catch((error) => console.warn(error));
-  
+    Geocoder.init(GOOGLE_MAPS_APIKEY);
+    Geocoder.from(origin)
+      .then((json1) =>{Geocoder.init(GOOGLE_MAPS_APIKEY);
+      Geocoder.from(destination)
+        .then((json2) => {
+          console.log(end_lat,end_lng);
+          console.log(destination)
+          var location = json2.results[0].geometry.location;
+          let end_lat = location.lat;
+          let end_lng = location.lng;
+          setEndLat(end_lat)
+          setEndLng(end_lng)
+          console.log(end_lat,end_lng);
+
+          console.log("hi",start_lat,start_lng);
+          console.log("hello",origin)
+          var location = json1.results[0].geometry.location;
+          let start_lat = location.lat;
+          let start_lng = location.lng;
+          setStartLat(start_lat)
+          setStartLng(start_lng)
+          console.log("done",start_lat,start_lng);
+        })})
   },[])
 
+ 
   return (
   <>
     <MapView
       style={{width: '100%', height: '54%'}}
       provider={PROVIDER_GOOGLE}
       showsUserLocation={true}
+      
       initialRegion={{
-        latitude: 28.450627,
+        latitude: start_lat,
         //{this.state.latitude}
-        longitude: -16.263045,
+        longitude: start_lng,
         latitudeDelta: 0.0222,
-        longitudeDelta: 0.0121,
+        longitudeDelta: 0.0121 ,
       }}>
     <Marker
-          coordinate={{latitude: 28.456312, longitude: -16.252929}}
+          coordinate={{latitude: start_lat, longitude: start_lng}}
         //   title={'Origin'}
         ></Marker>
     <Marker
-          coordinate={{latitude: 28.450627, longitude: -16.263045}}
+          coordinate={{latitude: end_lat, longitude: end_lng}}
         //   title={'Origin'}
         ></Marker>
           <Image
@@ -97,8 +84,8 @@ const Booking = ({route,navigation }) => {
       <Text>{start_lat} {start_lng}</Text>
       <Text>{end_lat} {end_lng}</Text> 
      <MapViewDirections
-        origin={originLoc}
-        destination={destinationLoc}
+        origin={{latitude: start_lat, longitude: start_lng}}
+        destination={{latitude: end_lat, longitude: end_lng}}
         apikey={GOOGLE_MAPS_APIKEY}
         strokeWidth={5}
         strokeColor="black"
@@ -108,6 +95,7 @@ const Booking = ({route,navigation }) => {
       <Text>{origin}</Text>
       <Text>{destination}</Text>
       <Cars/>
+      <Button title="CONFIRM BOOKING" onPress={() => navigation.navigate('ConfirmBooking')}/>
     </>
   );
 };

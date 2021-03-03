@@ -4,7 +4,7 @@ import History from "C:/Users/shrey/FreightApp/components/History.js";
 import Earnings from "C:/Users/shrey/FreightApp/components/Earnings.js";
 import Profile from "C:/Users/shrey/FreightApp/components/Profile.js";
 import Booking from "C:/Users/shrey/FreightApp/components/Booking.js";
-
+import ConfirmBooking from "C:/Users/shrey/FreightApp/components/ConfirmBooking.js";
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';

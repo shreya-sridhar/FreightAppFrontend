@@ -9,6 +9,7 @@ import Earnings from "C:/Users/shrey/FreightApp/components/Earnings.js";
 import FindPlaces from "C:/Users/shrey/FreightApp/components/FindPlaces.js";
 import Profile from "C:/Users/shrey/FreightApp/components/Profile.js";
 import Booking from "C:/Users/shrey/FreightApp/components/Booking.js";
+import ConfirmBooking from "C:/Users/shrey/FreightApp/components/ConfirmBooking.js";
 import Cars from "C:/Users/shrey/FreightApp/components/Cars.js";
 import DrawerFunc from "C:/Users/shrey/FreightApp/Drawer.js";
 // import { Video } from "expo-av";
@@ -46,13 +47,12 @@ class App extends React.Component{
     }
 
    AppNavigator = createAppContainer(createStackNavigator({
-    
       // Main : {screen:Main},
       // History:{screen:History}
-      HomeMap : {name:"HomeMap", screen: (routerprops) => DrawerFunc({id:21,cars:this.state.users,...routerprops })},
-      FindPlaces:{screen:FindPlaces},
+      HomeMap : {name:"HomeMap", screen: (routerprops) => DrawerFunc({id:21,users:this.state.users,...routerprops })},
       Booking:{name:"Booking", screen:Booking},
-      Cars:{screen:Cars}
+      ConfirmBooking:{name:"ConfirmBooking", screen:ConfirmBooking}
+
     }))
 
     render(){

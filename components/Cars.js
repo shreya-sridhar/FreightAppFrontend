@@ -15,40 +15,29 @@ import { FontAwesome } from '@expo/vector-icons'; // 6.2.2
 const images = [
   {
     key: 1,
-    name: "Nathan Anderson",
-    uri: {uri: 'C:/Users/shrey/FreightApp/assets/images/flatbed.png'},
-    url: "https://unsplash.com/photos/C9t94JC4_L8"
+    name: "Flatbed Truck",
+    uri: img1
   },
   {
     key: 2,
-    name: "Jamison McAndie",
-    uri: {uri: 'https://res.cloudinary.com/donglyhya/image/upload/v1516817597/campaign2_hfbowa.png'},
-    url: "https://unsplash.com/photos/waZEHLRP98s"
+    name: "Small Truck",
+    uri: img2
   },
   {
     key: 3,
-    name: "Alberto Restifo",
-    uri: {uri: 'https://res.cloudinary.com/donglyhya/image/upload/v1516817597/campaign3_utrh6j.jpg'},
-    url: "https://unsplash.com/photos/cFplR9ZGnAk"
+    name: "Trailer Truck (8ft)",
+    uri: img3
   },
   {
     key: 4,
-    name: "John Towner",
-    uri: {uri: 'https://res.cloudinary.com/donglyhya/image/upload/v1516817597/campaign4_wlc7p1.jpg'},
-    url: "https://unsplash.com/photos/89PFnHKg8HE"
+    name: "Standard Truck (6ft)",
+    uri: img4
   },
   {
     key: 5,
-    name: "John Towner",
-    uri: {uri: 'https://res.cloudinary.com/donglyhya/image/upload/v1516817882/campaign5_wudgxu.jpg'},
-    url: "https://unsplash.com/photos/89PFnHKg8HE"
-  },
-  {
-    key: 6,
-    name: "John Towner",
-    uri: {uri: 'https://res.cloudinary.com/donglyhya/image/upload/v1516817597/campaign6_lfiwwo.jpg'},
-    url: "https://unsplash.com/photos/89PFnHKg8HE"
-  },
+    name: "Refridgerated Truck (6ft)",
+    uri: img5
+  }
 ];
 
 class Store extends Component {
@@ -61,26 +50,20 @@ class Store extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <ScrollView contentContainerStyle={{ paddingVertical: 20 }}>
-          {images.map(({ name, uri, url, key }) => (
-            <Card key={key}>
+        <ScrollView horizontal contentContainerStyle={{ paddingVertical: 0 }}>
+          {images.map(({ name, uri, key }) => (
+            <Card onPress = {()=> this.props.selectVehicle(name)} key={key}>
                <Image
             style={{
-              width: 70,
-              height: 70,
+              width: 150,
+              height: 150,
               resizeMode: 'contain'
             }}
             source={uri}
           />   
               <Text style={{ marginBottom: 10 }}>
-                Photo by Jim.
-
+                {name}
               </Text>
-              <Button
-                buttonStyle={{backgroundColor: "#03A9F4"}}
-                text="View more"
-                onPress={() => Linking.openURL(url)}
-              />
             </Card>
           ))}
         </ScrollView>
