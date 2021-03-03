@@ -49,10 +49,12 @@ class App extends React.Component{
    AppNavigator = createAppContainer(createStackNavigator({
       // Main : {screen:Main},
       // History:{screen:History}
-      HomeMap : {name:"HomeMap", screen: (routerprops) => DrawerFunc({id:21,users:this.state.users,...routerprops })},
+      HomeMap : {name:"HomeMap", screen:HomeMap},
+      //  (routerprops) => DrawerFunc({id:21,users:this.state.users,...routerprops })},
       Booking:{name:"Booking", screen:Booking},
-      ConfirmBooking:{name:"ConfirmBooking", screen:ConfirmBooking}
-
+      ConfirmBooking:{name:"ConfirmBooking", screen:ConfirmBooking},
+      Cars:{name:"Cars", screen:Cars},
+      FindPlaces:{name:"FindPlaces", screen:FindPlaces}
     }))
 
     render(){

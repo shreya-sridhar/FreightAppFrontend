@@ -7,13 +7,9 @@ import Cars from 'C:/Users/shrey/FreightApp/components/Cars.js';
 
 const GOOGLE_MAPS_APIKEY = "AIzaSyC0UZckU_eK8heofiWpXTUYU-IpJo0KhnI";
 
-const Booking = ({route,navigation }) => {
+class Booking extends React.Component{
 
-  let start_lat = "28.456312"
-  let start_lng = "-16.252929"
-  let end_lat = "28.450627"
-  let end_lng = "-16.263045"
-
+    render(){
   return (
   <>
   <Text>Hello</Text>
@@ -22,7 +18,7 @@ const Booking = ({route,navigation }) => {
       provider={PROVIDER_GOOGLE}
       showsUserLocation={true}
       
-      initialRegion={{
+      initialR(routerprops) =>egion={{
         latitude: start_lat,
         longitude: start_lng,
         latitudeDelta: 0.0222,
@@ -51,7 +47,7 @@ const Booking = ({route,navigation }) => {
       />
       </MapView> */}
     </>
-  );
+  );}
 };
 
 export default Booking;
