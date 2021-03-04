@@ -19,11 +19,11 @@ export default class Splash extends Component {
                     source={require("C:/Users/shrey/FreightApp/assets/splash.json")}
                     height='100%'
                     autoPlay
-                    loop={false}
-                    speed={0.5}
+                    loop={false}    
+                    speed={1}
                     onAnimationFinish={() => {
                         console.log('Animation Finished!')
-                        this.props.navigation.replace('HomeMap');
+                        this.props.navigation.replace('Login');
                     }}
                 />
             </View>

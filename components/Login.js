@@ -1,88 +1,63 @@
+
+
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
+import { Asset } from 'expo-asset';
+import AppLoading from 'expo-app-loading'
+
+
+import MusicApp from "C:/Users/shrey/FreightApp/components/Music.js"
+
+function cacheImages(images) {
+  return images.map(image => {
+    if (typeof image === 'string') {
+      return Image.prefetch(image);
+    } else {
+      return Asset.fromModule(image).downloadAsync();
+    }
+  });
+}
 export default class App extends React.Component {
-  state={
-    email:"",
-    password:""
+  constructor() {
+    super();
+    this.state = {
+      isReady: false
+    };
   }
-  render(){
-    return (
-      <View style={styles.container}>
-        <Text style={styles.logo}>HeyAPP</Text>
-        <View style={styles.inputView} >
-          <TextInput  
-            style={styles.inputText}
-            placeholder="Email..." 
-            placeholderTextColor="#003f5c"
-            onChangeText={text => this.setState({email:text})}/>
-        </View>
-        <View style={styles.inputView} >
-          <TextInput  
-            secureTextEntry
-            style={styles.inputText}
-            placeholder="Password..." 
-            placeholderTextColor="#003f5c"
-            onChangeText={text => this.setState({password:text})}/>
-        </View>
-        <TouchableOpacity>
-          <Text style={styles.forgot}>Forgot Password?</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.loginBtn}>
-          <Text style={styles.loginText}>LOGIN</Text>
-        </TouchableOpacity>
-        <TouchableOpacity>
-          <Text style={styles.loginText}>Signup</Text>
-        </TouchableOpacity>
 
-  
-      </View>
-    );
+  async _loadAssetsAsync() {
+    const imageAssets = cacheImages([require('C:/Users/shrey/FreightApp/assets/bg.jpg')]);
+
+    await Promise.all([...imageAssets]);
+  }
+
+  getNav = () => {
+    this.props.navigation.navigate("HomeMap")
+  }
+
+  render() {
+    if (!this.state.isReady) {
+      return (
+        <AppLoading
+          startAsync={this._loadAssetsAsync}
+          onFinish={() => this.setState({ isReady: true })}
+          onError={console.warn}
+        />
+      );
+    }
+    return <MusicApp getNav={this.getNav}/>;
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#003f5c',
+    backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
-  },
-  logo:{
-    fontWeight:"bold",
-    fontSize:50,
-    color:"#fb5b5a",
-    marginBottom:40
-  },
-  inputView:{
-    width:"80%",
-    backgroundColor:"#465881",
-    borderRadius:25,
-    height:50,
-    marginBottom:20,
-    justifyContent:"center",
-    padding:20
-  },
-  inputText:{
-    height:50,
-    color:"white"
-  },
-  forgot:{
-    color:"white",
-    fontSize:11
-  },
-  loginBtn:{
-    width:"80%",
-    backgroundColor:"#fb5b5a",
-    borderRadius:25,
-    height:50,
-    alignItems:"center",
-    justifyContent:"center",
-    marginTop:40,
-    marginBottom:10
-  },
-  loginText:{
-    color:"white"
+    justifyContent: 'center'
   }
 });
+
+
 

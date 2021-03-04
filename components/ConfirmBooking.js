@@ -31,7 +31,7 @@ class Booking extends React.Component{
   <Text>{this.props.navigation.state.params.id}</Text>
   <Text>{this.props.navigation.state.params.users[0].latitude}</Text>
   <Text>{this.props.navigation.state.params.users[0].longitude}</Text>
-  <MapView
+  {/* <MapView
       style={{width: '100%', height: '54%'}}
       provider={PROVIDER_GOOGLE}
       showsUserLocation={true}
@@ -44,7 +44,7 @@ class Booking extends React.Component{
         // parseInt(this.props.navigation.state.params.users[0].longitude),
         latitudeDelta: 0.0222,
         longitudeDelta: 0.0121 ,
-      }}/>
+      }}/> */}
 
   {/* <Text>{this.props.users}</Text> */}
     {/* <MapView

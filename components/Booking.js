@@ -81,7 +81,7 @@ const Booking = ({route,navigation }) => {
             }}
             source={img}
           />  
-      <Text>{users[0].name}</Text>
+      {/* <Text>{users[0].name}</Text> */}
       <Text>{start_lat} {start_lng}</Text>
       <Text>{end_lat} {end_lng}</Text> 
      {/* <MapViewDirections

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Image, Text } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
+// import DateTime from 'C:/Users/shrey/FreightApp/components/DateTime.js';
  
 function GooglePlacesInput(props){
   const homePlace = { description: 'Home', geometry: { location: { lat: 48.8152937, lng: 2.4597668 } }};
@@ -116,6 +117,7 @@ const currentLocation = { description: 'currentLocation', geometry: { location: 
     debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
     renderLeftButton={() => <Text>To?</Text>}
   />
+  {/* <DateTime/> */}
   </>
 
   );

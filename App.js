@@ -13,6 +13,7 @@ import ConfirmBooking from "C:/Users/shrey/FreightApp/components/ConfirmBooking.
 import Cars from "C:/Users/shrey/FreightApp/components/Cars.js";
 import DrawerFunc from "C:/Users/shrey/FreightApp/Drawer.js";
 import Splash from 'C:/Users/shrey/FreightApp/components/Splash.js';
+import Login from 'C:/Users/shrey/FreightApp/components/Login.js';
 // import { Video } from "expo-av";
 // import VideoPlayer from "expo-video-player";
 import { createAppContainer } from "react-navigation";
@@ -52,6 +53,7 @@ class App extends React.Component {
       // Main : {screen:Main},
       // History:{screen:History}
       Splash: {name: "Splash", screen: Splash},
+      Login:{name:"Login",screen: Login},
       HomeMap: {
         name: "HomeMap",
         screen: (routerprops) =>
