@@ -12,6 +12,7 @@ import Booking from "C:/Users/shrey/FreightApp/components/Booking.js";
 import ConfirmBooking from "C:/Users/shrey/FreightApp/components/ConfirmBooking.js";
 import Cars from "C:/Users/shrey/FreightApp/components/Cars.js";
 import DrawerFunc from "C:/Users/shrey/FreightApp/Drawer.js";
+import Splash from 'C:/Users/shrey/FreightApp/components/Splash.js';
 // import { Video } from "expo-av";
 // import VideoPlayer from "expo-video-player";
 import { createAppContainer } from "react-navigation";
@@ -50,6 +51,7 @@ class App extends React.Component {
     createStackNavigator({
       // Main : {screen:Main},
       // History:{screen:History}
+      Splash: {name: "Splash", screen: Splash},
       HomeMap: {
         name: "HomeMap",
         screen: (routerprops) =>
