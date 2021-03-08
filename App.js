@@ -12,15 +12,16 @@ import Booking from "C:/Users/shrey/FreightApp/components/Booking.js";
 import ConfirmBooking from "C:/Users/shrey/FreightApp/components/ConfirmBooking.js";
 import Cars from "C:/Users/shrey/FreightApp/components/Cars.js";
 import DrawerFunc from "C:/Users/shrey/FreightApp/Drawer.js";
-import Splash from 'C:/Users/shrey/FreightApp/components/Splash.js';
-import Login from 'C:/Users/shrey/FreightApp/components/Login.js';
+import Splash from "C:/Users/shrey/FreightApp/components/Splash.js";
+import Login from "C:/Users/shrey/FreightApp/components/Login.js";
+import OnBoarding from "C:/Users/shrey/FreightApp/components/OnBoarding.js";
 // import { Video } from "expo-av";
 // import VideoPlayer from "expo-video-player";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 // // import Navigator from './routes/homeStack'
-
+import UrlBase from "C:/Users/shrey/FreightApp/UrlBase.js";
 import { NavigationContainer } from "@react-navigation/native";
 
 const ridesUrl = "http://192.168.1.181:8080/rides";
@@ -28,18 +29,20 @@ const usersUrl = "http://192.168.1.181:8080/users";
 
 class App extends React.Component {
   state = {
-    users: [{"id":1,"name":"shreya"}],
+    users: [],
     rides: [],
+    user: {},
   };
 
   componentDidMount() {
-    fetch("https://192.168.1.181:8080/users")
+    console.log("before fetch");
+    fetch("http://10.0.2.2:8080/users")
       .then((res) => res.json())
       .then((data1) =>
-        fetch("https://192.168.1.181:8080/rides")
+        fetch("http://10.0.2.2:8080/rides")
           .then((res) => res.json())
           .then((data2) => {
-            console.log("nooooo")
+            console.log("nooooo");
             this.setState({
               users: data1,
               rides: data2,
@@ -48,23 +51,51 @@ class App extends React.Component {
       );
   }
 
+  getNav = (user) => {
+      this.setState({user:user})
+  }
+
   AppNavigator = createAppContainer(
-    createStackNavigator({
-      // Main : {screen:Main},
-      // History:{screen:History}
-      Splash: {name: "Splash", screen: Splash},
-      Login:{name:"Login",screen: Login},
-      HomeMap: {
-        name: "HomeMap",
-        screen: (routerprops) =>
-          DrawerFunc({ id: 21, users: this.state.users, ...routerprops }),
+    createStackNavigator(
+      {
+        // Main : {screen:Main},
+        // History:{screen:History}
+        // Splash: {name: "Splash", screen: Splash},
+
+        OnBoarding : {name: "OnBoarding",screen: OnBoarding},
+        Login: {
+          name: "Login",
+          screen: (routerprops) => {
+            return (
+              <Login 
+                getNav={this.getNav} users={this.state.users} routerprops={routerprops}
+              />
+            );
+          },
+        },
+        HomeMap: {
+          name: "HomeMap",
+          screen: (routerprops) =>
+            DrawerFunc({
+              user: this.state.user,
+              id: 21,
+              users: this.state.users,
+              ...routerprops,
+            }),
+        },
+        //  (routerprops) => DrawerFunc({id:21,users:this.state.users,...routerprops })},
+        Booking: { name: "Booking", screen: Booking },
+        ConfirmBooking: { name: "ConfirmBooking", screen: ConfirmBooking },
+        Cars: { name: "Cars", screen: Cars },
+        FindPlaces: { name: "FindPlaces", screen: FindPlaces },
       },
-      //  (routerprops) => DrawerFunc({id:21,users:this.state.users,...routerprops })},
-      Booking: { name: "Booking", screen: Booking },
-      ConfirmBooking: { name: "ConfirmBooking", screen: ConfirmBooking },
-      Cars: { name: "Cars", screen: Cars },
-      FindPlaces: { name: "FindPlaces", screen: FindPlaces },
-    })
+      {
+        headerMode: "none",
+        navigationOptions: {
+          headerVisible: false,
+        },
+      }
+    )
   );
 
   render() {
@@ -73,3 +104,4 @@ class App extends React.Component {
 }
 
 export default App;
+

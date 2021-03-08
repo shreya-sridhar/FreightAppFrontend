@@ -52,7 +52,7 @@ class Store extends Component {
       <View style={{ flex: 1 }}>
         <ScrollView horizontal contentContainerStyle={{ paddingVertical: 0 }}>
           {images.map(({ name, uri, key }) => (
-            <Card onPress = {()=> this.props.selectVehicle(name)} key={key}>
+            <Card onClick = {()=> this.props.selectVehicle(name)} key={key}>
                <Image
             style={{
               width: 150,

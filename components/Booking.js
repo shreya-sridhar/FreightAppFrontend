@@ -5,6 +5,7 @@ import Geocoder from "react-native-geocoding";
 import {StyleSheet,Image,Text,Button} from "react-native";
 import img from 'C:/Users/shrey/FreightApp/assets/images/comfort.jpeg';
 import Cars from 'C:/Users/shrey/FreightApp/components/Cars.js';
+import Dropdown from 'C:/Users/shrey/FreightApp/components/Dropdown.js';
 
 const GOOGLE_MAPS_APIKEY = "AIzaSyC0UZckU_eK8heofiWpXTUYU-IpJo0KhnI";
 
@@ -17,12 +18,15 @@ const Booking = ({route,navigation }) => {
   const [start_lng, setStartLng] = useState(-16.252929)
   const [end_lat, setEndLat] = useState(28.450627)
   const [end_lng, setEndLng] = useState(-16.263045)
+  const [vehicle, setVehicle] = useState("Standard Truck (6ft)")
 
   // const { origin, destination } = route.params;
   const origin = navigation.getParam('origin')
   const destination = navigation.getParam('destination')
   const id = navigation.getParam('id')
   const users = navigation.getParam('users')
+  const pickup_time = navigation.getParam('pickup_time')
+  const pickup_date = navigation.getParam('pickup_date')
 
   useEffect(() => {
     Geocoder.init(GOOGLE_MAPS_APIKEY);
@@ -50,7 +54,11 @@ const Booking = ({route,navigation }) => {
         })})
   },[])
 
- 
+  selectVehicle = (veh) => {
+    console.log("vehicle set")
+    setVehicle(veh)
+  }
+
   return (
   <>
     <MapView
@@ -65,6 +73,7 @@ const Booking = ({route,navigation }) => {
         latitudeDelta: 0.0222,
         longitudeDelta: 0.0121 ,
       }}>
+        <Text>{vehicle}</Text>
     <Marker
           coordinate={{latitude: start_lat, longitude: start_lng}}
         //   title={'Origin'}
@@ -84,6 +93,8 @@ const Booking = ({route,navigation }) => {
       {/* <Text>{users[0].name}</Text> */}
       <Text>{start_lat} {start_lng}</Text>
       <Text>{end_lat} {end_lng}</Text> 
+      <Text>{pickup_time}</Text>
+      <Text>{pickup_date}</Text>
      {/* <MapViewDirections
         origin={{latitude: start_lat, longitude: start_lng}}
         destination={{latitude: end_lat, longitude: end_lng}}
@@ -92,10 +103,13 @@ const Booking = ({route,navigation }) => {
         strokeColor="black"
       /> */}
       </MapView>
+      <Text>Select Load Type</Text>
+      <Dropdown/>
       <Text>Select Car Type</Text>
       <Text>{origin}</Text>
       <Text>{destination}</Text>
-      <Cars/>
+      <Cars selectVehicle = {selectVehicle}/>
+      
       <Button title="CONFIRM BOOKING" onPress={() => navigation.navigate('ConfirmBooking',{
                 origin: origin,
                 destination: destination,
