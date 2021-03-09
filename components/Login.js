@@ -40,18 +40,18 @@ export default class App extends React.Component {
   }
 
   componentDidMount() {
-    const getData = async () => {
-      try {
-        console.log("storage on mount");
-        const jsonValue = await AsyncStorage.getItem("@storage_Key");
-        return jsonValue != null ? JSON.parse(jsonValue) : null;
-      } catch (e) {
-        // error reading value
-      }
-    };
-    if (getData) {
-      this.persistUser(getData);
-    }
+    // const getData = async () => {
+    //   try {
+    //     console.log("storage on mount");
+    //     const jsonValue = await AsyncStorage.getItem("@storage_Key");
+    //     return jsonValue != null ? JSON.parse(jsonValue) : null;
+    //   } catch (e) {
+    //     // error reading value
+    //   }
+    // };
+    // if (getData) {
+    //   this.persistUser(getData);
+    // }
   }
 
   persistUser = (token) => {
@@ -64,6 +64,7 @@ export default class App extends React.Component {
     })
       .then((resp) => resp.json())
       .then((data) => {
+        console.log(data)
         if (data.username) {
           const { username, id } = data;
           this.setState({
@@ -157,6 +158,7 @@ export default class App extends React.Component {
   };
 
   render() {
+    console.log(this.state.user)
     if (!this.state.isReady) {
       return (
         <AppLoading

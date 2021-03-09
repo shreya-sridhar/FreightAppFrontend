@@ -1,37 +1,54 @@
 import React from "react";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
-import {StyleSheet,Image,Text,Button} from "react-native";
-import img from 'C:/Users/shrey/FreightApp/assets/images/comfort.jpeg';
-import Cars from 'C:/Users/shrey/FreightApp/components/Cars.js';
+import { StyleSheet, Image, Text, Button } from "react-native";
+import img from "C:/Users/shrey/FreightApp/assets/images/comfort.jpeg";
+import Cars from "C:/Users/shrey/FreightApp/components/Cars.js";
 
 const GOOGLE_MAPS_APIKEY = "AIzaSyC0UZckU_eK8heofiWpXTUYU-IpJo0KhnI";
 
-class Booking extends React.Component{
+class ConfirmBooking extends React.Component {
   state = {
-    driver_lat : 28.450627,
-    driver_lng : -16.263045
-  }
+    driver_lat: 28.450627,
+    driver_lng: -16.263045,
+  };
 
-  componentDidMount(){
-    this.setState(
-      {
-        driver_lat:parseInt(this.props.navigation.state.params.users[0].latitude),
-        driver_lng:parseInt(this.props.navigation.state.params.users[0].longitude)
-      }
-    )
-  }
+  // componentDidMount() {
+  //   // this.setState(
+  //   //   {
+  //   //     driver_lat:parseInt(this.props.navigation.state.params.users[0].latitude),
+  //   //     driver_lng:parseInt(this.props.navigation.state.params.users[0].longitude)
+  //   //   }
+  //   // )
+  //   fetch("http://10.0.2.2:8080/rides", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       pickup_location: this.props.origin,
+  //       drop_location: this.props.destination,
+  //       pickup_time: this.props.pickup_time,
+  //       vehicle_type: this.props.vehicle,
+  //       driver: this.props.driver,
+  //       customer: this.props.customer,
+  //     }),
+  //   })
+  //     .then((resp) => resp.json())
+  //     .then((data) => {
+  //       // let newOrders = this.state.order.concat(data)
+  //       // this.setState({orders:newOrders})
+  //       console.log(data);
+  //     });
+  // }
 
-    render(){
-  return (
-  <>
-  <Text>Hello</Text>
-  <Text>{this.props.navigation.state.params.origin}</Text>
-  <Text>{this.props.navigation.state.params.destination}</Text>
-  <Text>{this.props.navigation.state.params.id}</Text>
-  <Text>{this.props.navigation.state.params.users[0].latitude}</Text>
-  <Text>{this.props.navigation.state.params.users[0].longitude}</Text>
-  {/* <MapView
+  render() {
+    return (
+      <>
+        <Text>Hello</Text>
+        {/* <Text>{this.props.navigation.state.params.origin}</Text>
+        <Text>{this.props.navigation.state.params.destination}</Text> */}
+        {/* <MapView
       style={{width: '100%', height: '54%'}}
       provider={PROVIDER_GOOGLE}
       showsUserLocation={true}
@@ -46,8 +63,8 @@ class Booking extends React.Component{
         longitudeDelta: 0.0121 ,
       }}/> */}
 
-  {/* <Text>{this.props.users}</Text> */}
-    {/* <MapView
+        {/* <Text>{this.props.users}</Text> */}
+        {/* <MapView
       style={{width: '100%', height: '54%'}}
       provider={PROVIDER_GOOGLE}
       showsUserLocation={true}
@@ -80,11 +97,9 @@ class Booking extends React.Component{
         strokeColor="black"
       />
       </MapView> */}
-    </>
-  );}
-};
+      </>
+    );
+  }
+}
 
-export default Booking;
-
-
-
+export default ConfirmBooking;

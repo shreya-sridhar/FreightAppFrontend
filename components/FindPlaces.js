@@ -32,7 +32,7 @@ const currentLocation = { description: 'currentLocation', geometry: { location: 
  
       query={{
         // available options: https://developers.google.com/places/web-service/autocomplete
-        key: 'REPLACED_KEY',
+        key: 'AIzaSyC0UZckU_eK8heofiWpXTUYU-IpJo0KhnI',
         language: 'en', // language of the results
         types: '(cities)' // default: 'geocode'
       }}
@@ -135,7 +135,7 @@ const currentLocation = { description: 'currentLocation', geometry: { location: 
 
     query={{
       // available options: https://developers.google.com/places/web-service/autocomplete
-      key: 'REPLACED_KEY',
+      key: 'AIzaSyC0UZckU_eK8heofiWpXTUYU-IpJo0KhnI',
       language: 'en', // language of the results
       types: '(cities)' // default: 'geocode'
     }}

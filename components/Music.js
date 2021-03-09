@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Dimensions, TextInput } from "react-native";
+import { View, Text, StyleSheet, Dimensions, TextInput,TouchableHighlight } from "react-native";
 import Svg, { Image, Circle, ClipPath } from "react-native-svg";
 import Animated, { Easing } from "react-native-reanimated";
 import { TapGestureHandler, State } from "react-native-gesture-handler";
@@ -55,7 +55,7 @@ function runTiming(clock, value, dest) {
 }
 class MusicApp extends Component {
   state = {
-    login: false,
+    login: true,
     username: "shreya",
     password: "123",
   };
@@ -162,8 +162,9 @@ class MusicApp extends Component {
           </Svg>
         </Animated.View>
         <View style={{ height: height / 3, justifyContent: "center" }}>
+          <TouchableHighlight onClick={() => toggleLogin(true)}>
           <TapGestureHandler
-            onHandlerStateChange={this.onStateChange}
+            onHandlerStateChange={this.onStateChange} 
           >
             <Animated.View 
               style={{
@@ -172,12 +173,13 @@ class MusicApp extends Component {
                 transform: [{ translateY: this.buttonY }],
               }}
             >
-              <Text onClick={() => toggleLogin(true)} style={{ fontSize: 20, fontWeight: "bold" }}>SIGN IN</Text>
+              <Text style={{ fontSize: 20, fontWeight: "bold" }}>SIGN IN</Text>
             </Animated.View>
           </TapGestureHandler>
+          </TouchableHighlight>
+          <TouchableHighlight onClick={() => toggleLogin(false)}>
           <TapGestureHandler
             onHandlerStateChange={this.onStateChange}
-            onHandlerStateChange={() => this.toggleLogin(false)}
           >
             <Animated.View
               style={{
@@ -194,6 +196,7 @@ class MusicApp extends Component {
               </Text>
             </Animated.View>
           </TapGestureHandler>
+          </TouchableHighlight>
           <Animated.View
             style={{
               zIndex: this.textInputZindex,

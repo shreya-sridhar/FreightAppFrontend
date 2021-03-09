@@ -1,42 +1,76 @@
-import DropdownMenu from 'react-native-dropdown-menu';
+import * as React from 'react';
+import { Text, View, StyleSheet, FlatList, Platform } from 'react-native';
+import Constants from 'expo-constants';
 
-export default class Demo extends Component {
+// DropDownPicker
+import DropDownPicker from "react-native-dropdown-picker";
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      text: ''
-    };
-  }
-  
-  render() {
-    var data = [["C", "Java", "JavaScript", "PHP"], ["Python", "Ruby"], ["Swift", "Objective-C"]];
-    return (
-      <View style={{flex: 1}}>
-        <View style={{height: 64}} />
-        <DropdownMenu
-          style={{flex: 1}}
-          bgColor={'white'}
-          tintColor={'#666666'}
-          activityTintColor={'green'}
-          // arrowImg={}      
-          // checkImage={}   
-          // optionTextStyle={{color: '#333333'}}
-          // titleStyle={{color: '#333333'}} 
-          // maxHeight={300} 
-          handler={(selection, row) => this.setState({text: data[selection][row]})}
-          data={data}
-        >
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.paragraph}>
+        React native dropdown picker
+      </Text>
 
-          <View style={{flex: 1}}>
-            <Text>
-              {this.state.text} is the best language in the world
-            </Text>
-          </View>
+      <View
+        style={{
 
-        </DropdownMenu>
+          // The solution: Apply zIndex to any device except Android
+          ...(Platform.OS !== 'android' && {
+            zIndex: 10
+          })
+          
+        }}
+      >
+        <DropDownPicker
+          items={[
+            { label: 'UK', value: 'uk' },
+            { label: 'France', value: 'france' },
+            { label: 'Germany', value: 'germany' },
+          ]}
+          placeholder="Select a country"
+          containerStyle={{height: 40}}
+          style={{ backgroundColor: '#ffffff' }}
+          dropDownStyle={{ backgroundColor: 'white' }}
+        />
       </View>
-    );
-  }
+    
+      <FlatList
+        data={[
+          {title: '1. Das Leben ist nicht fair'},
+          {title: '2. Wir werden trotzdem sterben'},
+          {title: '3. Aber lass uns so leben, wie wir wollen'},
+          {title: '4. Das ist besser'},
+        ]}
+        renderItem={(item, index) => <Text>{item.item.title}</Text>}
+        keyExtractor={(item, index) => index.toString()}
+        style={{
+          marginTop: 40
+        }}
+        contentContainerStyle={{
+          borderRadius: 5,
+          padding: 15,
+          backgroundColor: 'red'
+        }}
+      />
+
+
+    </View>
+  );
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    paddingTop: Constants.statusBarHeight,
+    backgroundColor: '#ecf0f1',
+    padding: 8,
+  },
+  paragraph: {
+    margin: 24,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+});

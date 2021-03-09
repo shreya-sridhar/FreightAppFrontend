@@ -20,7 +20,7 @@ import { render } from "react-dom";
 import Geocoder from "react-native-geocoding";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { faThList } from "@fortawesome/free-solid-svg-icons";
-const GOOGLE_MAPS_APIKEY = "REPLACED_KEY";
+const GOOGLE_MAPS_APIKEY = "dummy";
 const cars = [
   {
     id: "0",
@@ -60,11 +60,10 @@ export default class HomeMap extends React.Component {
     searchFocused: false,
     destination: "",
     origin: "",
-    vehicle_type: "",
-    users: this.props.users,
+    // vehicle_type: "Standard Truck (6ft)",
+    // users: this.props.users,
     pickup_date: null,
-    pickup_time: null,
-    driver: {},
+    pickup_time: null
   };
 
   toggleSwitch = (value) => {
@@ -121,7 +120,7 @@ export default class HomeMap extends React.Component {
   };
 
   setOrigin = (data, details) => {
-    console.log("set origin");
+    console.log("set origin")
     this.setState({ origin: data.description });
   };
 
@@ -130,29 +129,23 @@ export default class HomeMap extends React.Component {
   };
 
   getDate = (date) => {
-    console.log("herre");
+    console.log("herre")
     this.setState({ pickup_date: date, pickup_time: date });
-    // this.findDriver()
   };
 
-  findDriver = () => {
-    console.log("finding driver");
-    fetch("http://10.0.2.2:8080/driver")
-      .then((response) => response.json())
-      .then((data) => this.setState({ driver: data }));
-  };
-
-  createBooking = () => {
-    console.log("make booking");
-  };
+  combined = () => {
+    this.props.getRideData(this.state)
+    this.props.findDriver()
+    this.props.navigation.navigate("Booking")
+  }
 
   render() {
     console.log("HomeMap this.props.id", this.state.pickup_date);
     console.log("HomeMap user", this.props.user);
-    console.log("origin", this.state.origin);
-    console.log("destination", this.state.destination);
-    console.log("time", this.state.pickup_time);
-    console.log("date", this.state.pickup_date);
+    console.log("origin",this.state.origin)
+    console.log("destination",this.state.destination)
+    console.log("time",this.state.pickup_time)
+    console.log("date",this.state.pickup_date)
     return (
       <>
         <View>
@@ -236,28 +229,16 @@ export default class HomeMap extends React.Component {
             </Marker>
           ))}
         </MapView>
-        {/* <Text>{this.props.navigation}</Text> */}
         <RaspberryStrip />
         <View onPress={() => this.getDate}>
-          <View onPress={() => this.setLocation}>
-            <View>
-              <Button
-                title="CONTINUE"
-                onPress={() =>
-                  this.props.navigation.navigate("Booking", {
-                    origin: this.state.origin,
-                    destination: this.state.destination,
-                    id: this.props.id,
-                    users: this.props.users,
-                    pickup_date: this.state.pickup_date,
-                    pickup_time: this.state.pickup_time,
-                  })
-                }
-              />
-            </View>
-          </View>
+            <Button
+              title="CONTINUE"
+              onPress = {this.combined}
+            />
         </View>
       </>
     );
   }
 }
+
+

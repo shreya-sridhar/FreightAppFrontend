@@ -7,7 +7,7 @@ import img5 from 'C:/Users/shrey/FreightApp/assets/images/ref_6.jpg';
 
 
 import React, { Component } from 'react';
-import { View, Text, ScrollView, Linking, Image } from 'react-native';
+import { View, Text, ScrollView, Linking, Image, TouchableHighlight } from 'react-native';
 import { Card, Button } from 'react-native-elements'; // 0.19.0
 
 import { FontAwesome } from '@expo/vector-icons'; // 6.2.2
@@ -52,7 +52,8 @@ class Store extends Component {
       <View style={{ flex: 1 }}>
         <ScrollView horizontal contentContainerStyle={{ paddingVertical: 0 }}>
           {images.map(({ name, uri, key }) => (
-            <Card onClick = {()=> this.props.selectVehicle(name)} key={key}>
+            <TouchableHighlight onPress = {()=> this.props.selectVehicle(name)}>
+            <Card key={key}>
                <Image
             style={{
               width: 150,
@@ -65,6 +66,7 @@ class Store extends Component {
                 {name}
               </Text>
             </Card>
+            </TouchableHighlight>
           ))}
         </ScrollView>
       </View>
