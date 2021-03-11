@@ -10,11 +10,13 @@ import FindPlaces from "C:/Users/shrey/FreightApp/components/FindPlaces.js";
 import Profile from "C:/Users/shrey/FreightApp/components/Profile.js";
 import Booking from "C:/Users/shrey/FreightApp/components/Booking.js";
 import ConfirmBooking from "C:/Users/shrey/FreightApp/components/ConfirmBooking.js";
+import LiveLocation from "C:/Users/shrey/FreightApp/components/LiveLocation.js";
 import Cars from "C:/Users/shrey/FreightApp/components/Cars.js";
 import DrawerFunc from "C:/Users/shrey/FreightApp/Drawer.js";
 import Splash from "C:/Users/shrey/FreightApp/components/Splash.js";
 import Login from "C:/Users/shrey/FreightApp/components/Login.js";
 import OnBoarding from "C:/Users/shrey/FreightApp/components/OnBoarding.js";
+import PushNotification from "C:/Users/shrey/FreightApp/components/PushNotification.js";
 // import { Video } from "expo-av";
 // import VideoPlayer from "expo-video-player";
 import { createAppContainer } from "react-navigation";
@@ -43,7 +45,7 @@ class App extends React.Component {
     start_lng: null,
     end_lat: null,
     end_lng: null,
-    rideId:null
+    rideId: null,
   };
 
   componentDidMount() {
@@ -154,17 +156,17 @@ class App extends React.Component {
         vehicle_type: this.state.vehicle,
         driver: this.state.driver,
         customer: this.state.user,
-        start_lat:this.state.start_lat,
-        start_lng:this.state.start_lng,
-        end_lat:this.state.end_lat,
-        end_lng:this.state.end_lng
+        start_lat: this.state.start_lat,
+        start_lng: this.state.start_lng,
+        end_lat: this.state.end_lat,
+        end_lng: this.state.end_lng,
       }),
     })
       .then((resp) => resp.json())
       .then((data) => {
         // let newOrders = this.state.order.concat(data)
         // this.setState({orders:newOrders})
-        this.setState({rideId:data.id})
+        this.setState({ rideId: data.id });
       });
   };
 
@@ -220,6 +222,29 @@ class App extends React.Component {
               ...routerprops,
             }),
         },
+        LiveLocation: {
+          name: "LiveLocation",
+          screen: (routerprops) => {
+            return (
+              <LiveLocation
+                driver={this.state.driver}
+                origin={this.state.origin}
+                user = {this.state.user}
+                destination={this.state.destination}
+                pickup_date={this.state.pickup_date}
+                vehicle={this.state.vehicle}
+                pickup_time={this.state.pickup_time}
+                start_lat={this.state.start_lat}
+                start_lng={this.state.start_lng}
+                end_lat={this.state.end_lat}
+                end_lng={this.state.end_lng}
+                // getVehicle={this.getVehicle}
+                // bookRide={this.bookRide}
+                routerprops={routerprops}
+              />
+            );
+          },
+        },
 
         Booking: {
           name: "Booking",
@@ -243,7 +268,6 @@ class App extends React.Component {
             );
           },
         },
-
         ConfirmBooking: {
           name: "ConfirmBooking",
           screen: (routerprops) => {
@@ -251,8 +275,13 @@ class App extends React.Component {
               <ConfirmBooking
                 driver={this.state.driver}
                 origin={this.state.origin}
+                user={this.state.user}
                 destination={this.state.destination}
                 pickup_date={this.state.pickup_date}
+                start_lat={this.state.start_lat}
+                start_lng={this.state.start_lng}
+                end_lat={this.state.end_lat}
+                end_lng={this.state.end_lng}
                 vehicle={this.state.vehicle}
                 pickup_time={this.state.pickup_time}
                 routerprops={routerprops}
@@ -261,6 +290,26 @@ class App extends React.Component {
           },
         },
 
+        PushNotification: {
+          name: "PushNotification",
+          screen: (routerprops) => {
+            return (
+              <PushNotification
+                driver={this.state.driver}
+                origin={this.state.origin}
+                destination={this.state.destination}
+                pickup_date={this.state.pickup_date}
+                start_lat={this.state.start_lat}
+                start_lng={this.state.start_lng}
+                end_lat={this.state.end_lat}
+                end_lng={this.state.end_lng}
+                vehicle={this.state.vehicle}
+                pickup_time={this.state.pickup_time}
+                routerprops={routerprops}
+              />
+            );
+          },
+        },
         Cars: { name: "Cars", screen: Cars },
         FindPlaces: { name: "FindPlaces", screen: FindPlaces },
       },
@@ -279,4 +328,3 @@ class App extends React.Component {
 }
 
 export default App;
-

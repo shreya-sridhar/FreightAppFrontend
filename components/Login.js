@@ -6,7 +6,7 @@ import AppLoading from "expo-app-loading";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import MusicApp from "C:/Users/shrey/FreightApp/components/Music.js";
-const API = "http://10.0.2.2:8080";
+const API = "10.0.2.2:8080";
 
 function cacheImages(images) {
   return images.map((image) => {

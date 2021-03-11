@@ -32,6 +32,7 @@ export default function App() {
     });
 
     return () => {
+      // console.log(props)
       Notifications.removeNotificationSubscription(notificationListener);
       Notifications.removeNotificationSubscription(responseListener);
     };
@@ -52,7 +53,7 @@ export default function App() {
         <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text>
       </View>
       <Button
-        title="Press to Send Notification"
+        title="Get Details"
         onPress={async () => {
           await sendPushNotification(expoPushToken);
         }}
@@ -66,7 +67,7 @@ async function sendPushNotification(expoPushToken) {
   const message = {
     to: expoPushToken,
     sound: 'default',
-    title: 'Original Title',
+    title: 'Ride Details',
     body: 'And here is the body!',
     data: { someData: 'goes here' },
   };
@@ -98,6 +99,7 @@ async function registerForPushNotificationsAsync() {
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
     console.log(token);
+    // console.log(props)
   } else {
     alert('Must use physical device for Push Notifications');
   }

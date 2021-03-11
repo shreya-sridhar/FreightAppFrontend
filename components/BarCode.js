@@ -26,7 +26,7 @@ class HelloWorld extends Component {
 
   addItem = (item) => {
     console.log("adding item")
-  fetch('http://10.0.2.2:8080/items/', {
+  fetch('https://radiant-meadow-46440.herokuapp.com/items/', {
       method: 'POST', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',

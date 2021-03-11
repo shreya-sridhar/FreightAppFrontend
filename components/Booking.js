@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import Geocoder from "react-native-geocoding";
-import { StyleSheet, Image, Text, Button } from "react-native";
+import { StyleSheet, Image, Text, Button, View } from "react-native";
 import img from "C:/Users/shrey/FreightApp/assets/images/comfort.jpeg";
 import Cars from "C:/Users/shrey/FreightApp/components/Cars.js";
 import Dropdown from "C:/Users/shrey/FreightApp/components/Dropdown.js";
+import PushNotification from "C:/Users/shrey/FreightApp/components/PushNotification.js";
 import { render } from "react-dom";
 
 const GOOGLE_MAPS_APIKEY = "AIzaSyC8whO4wSgNifJRFnCKMwVml2yB6AtbQ-8";
@@ -18,6 +19,7 @@ export default class Booking extends React.Component {
     end_lat: this.props.end_lat,
     end_lng: this.props.end_lng,
     vehicle: "Standard Truck (6ft)",
+    showPush: false
   };
 
   selectVehicle = (veh) => {
@@ -32,7 +34,8 @@ export default class Booking extends React.Component {
     console.log(this.props);
     await this.props.getVehicle(this.state.vehicle);
     await this.props.bookRide();
-    this.props.routerprops.navigation.navigate("ConfirmBooking")
+    await this.setState({showPush:true})
+    // this.props.routerprops.navigation.navigate("ConfirmBooking")
   };
 
   render() {
@@ -90,14 +93,13 @@ export default class Booking extends React.Component {
             onError={(e) => console.log("map error", e)}
           /> */}
         </MapView>
-        {/* <Text>Select Load Type</Text>
-        {/* <Dropdown/> */}
-        {/* <Text>Select Car Type</Text> */}
-        {/* <Text>{origin}</Text> */}
-        {/* <Text>{destination}</Text> */}
+        {this.state.showPush && <PushNotification/>}
+        <View style={{width:200,alignContent:"center",justifyContent:"center"}}>{this.state.showPush && <Button style={{width:200}} onPress={() => this.props.routerprops.navigation.navigate("ConfirmBooking")} title="Live Location"></Button>}</View>
         <Cars selectVehicle={this.selectVehicle} />
         <Button title="CONFIRM BOOKING" onPress={this.combined} />
       </>
     );
   }
 }
+
+

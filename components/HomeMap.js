@@ -196,7 +196,7 @@ export default class HomeMap extends React.Component {
       <>
         <View>
           {/* <Text>{this.props.users[0].name}</Text> */}
-          <Icon name="bell" style={{ fontSize: 25 }} />
+          <Button title="Turn on Location" onPress = {() => this.props.route.params.catId.navigation.navigate("LiveLocation")} name="location" style={{ fontSize: 25 }} />
           <Text>
             {this.state.switchValue
               ? "You are now a Driver"

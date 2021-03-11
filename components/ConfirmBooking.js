@@ -1,114 +1,199 @@
 
-import Constants from 'expo-constants';
-import * as Notifications from 'expo-notifications';
-import React, { useState, useEffect, useRef } from 'react';
-import { Text, View, Button, Platform } from 'react-native';
+import React from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Platform,
+  PermissionsAndroid,
+  Button
+} from "react-native";
+import MapView, {
+  Marker,
+  AnimatedRegion,
+  Polyline,
+  PROVIDER_GOOGLE
+} from "react-native-maps";
+import haversine from "haversine";
 
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
+// const LATITUDE = 29.95539;
+// const LONGITUDE = 78.07513;
+const LATITUDE_DELTA = 0.009;
+const LONGITUDE_DELTA = 0.009;
+const LATITUDE = 37.78825;
+const LONGITUDE = -122.4324;
 
-export default function App() {
-  const [expoPushToken, setExpoPushToken] = useState('');
-  const [notification, setNotification] = useState(false);
-  const notificationListener = useRef();
-  const responseListener = useRef();
+class AnimatedMarkers extends React.Component {
+  constructor(props) {
+    super(props);
 
-  useEffect(() => {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
-
-    // This listener is fired whenever a notification is received while the app is foregrounded
-    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-      setNotification(notification);
-    });
-
-    // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
-    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-      console.log(response);
-    });
-
-    return () => {
-      Notifications.removeNotificationSubscription(notificationListener);
-      Notifications.removeNotificationSubscription(responseListener);
+    this.state = {
+      driver_lat: LATITUDE,
+      driver_lng: LONGITUDE,
+      latitude: LATITUDE,
+      status:true,
+      longitude: LONGITUDE,
+      routeCoordinates: [],
+      distanceTravelled: 0,
+      prevLatLng: {},
+      coordinate: new AnimatedRegion({
+        latitude: LATITUDE,
+        longitude: LONGITUDE,
+        latitudeDelta: 0,
+        longitudeDelta: 0
+      })
     };
-  }, []);
+  }
 
-  return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'space-around',
-      }}>
-      <Text>Your expo push token: {expoPushToken}</Text>
-      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Title: {notification && notification.request.content.title} </Text>
-        <Text>Body: {notification && notification.request.content.body}</Text>
-        <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text>
-      </View>
-      <Button
-        title="Get Ride Details"
-        onPress={async () => {
-          await sendPushNotification(expoPushToken);
-        }}
-      />
-    </View>
-  );
-}
+  componentDidMount() {
+    const { coordinate } = this.state;
 
-// Can use this function below, OR use Expo's Push Notification Tool-> https://expo.io/notifications
-async function sendPushNotification(expoPushToken) {
-  const message = {
-    to: expoPushToken,
-    sound: 'default',
-    title: 'Original Title',
-    body: 'And here is the body!',
-    data: { someData: 'goes here' },
+    this.watchID = navigator.geolocation.watchPosition(
+      position => {
+        const { routeCoordinates, distanceTravelled } = this.state;
+        const { latitude, longitude } = position.coords;
+
+        const newCoordinate = {
+          latitude,
+          longitude
+        };
+console.log(newCoordinate)
+        if (Platform.OS === "android") {
+          if (this.marker) {
+            this.marker.animateMarkerToCoordinate(
+              newCoordinate,
+              500
+            );
+          }
+        } else {
+          coordinate.timing(newCoordinate).start();
+        }
+
+        this.setState({
+          latitude,
+          longitude,
+          routeCoordinates: routeCoordinates.concat([newCoordinate]),
+          distanceTravelled:
+            distanceTravelled + this.calcDistance(newCoordinate),
+          prevLatLng: newCoordinate
+        });
+      },
+      error => console.log(error),
+      {
+        enableHighAccuracy: true,
+        timeout: 20000,
+        maximumAge: 1000,
+        distanceFilter: 10
+      }
+    );
+  }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchID);
+  }
+
+  componentDidUpdate(){
+    fetch("http://10.0.2.2:8080/users/"+`${this.props.user.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({latitude:this.state.latitude,longitude:this.state.longitude}),
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+       console.log(data,"data")
+      let d = data.filter(d => d.id === this.props.driver.id)
+      console.log(d,"d")
+      this.setState({driver_lat:d.latitude,driver_lng:d.longitude})
+      })   
+  }
+
+  getMapRegion = () => ({
+    latitude: this.state.latitude,
+    longitude: this.state.longitude,
+    latitudeDelta: LATITUDE_DELTA,
+    longitudeDelta: LONGITUDE_DELTA
+  });
+
+  calcDistance = newLatLng => {
+    const { prevLatLng } = this.state;
+    return haversine(prevLatLng, newLatLng) || 0;
   };
 
-  await fetch('https://exp.host/--/api/v2/push/send', {
-    method: 'POST',
-    headers: {
-      Accept: 'application/json',
-      'Accept-encoding': 'gzip, deflate',
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(message),
-  });
-}
-
-async function registerForPushNotificationsAsync() {
-  let token;
-  if (Constants.isDevice) {
-    const { status: existingStatus } = await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-    }
-    if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification!');
-      return;
-    }
-    token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
-  } else {
-    alert('Must use physical device for Push Notifications');
+  removeButton = () => {
+    this.setState({status:false})
   }
 
-  if (Platform.OS === 'android') {
-    Notifications.setNotificationChannelAsync('default', {
-      name: 'default',
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: '#FF231F7C',
-    });
+  render() {
+    return (
+      <View style={styles.container}>
+        {this.state.status && <Button title='yo' onPress={()=>this.removeButton}/>}
+        <MapView
+          style={styles.map}
+          provider={PROVIDER_GOOGLE}
+          showUserLocation
+          followUserLocation
+          loadingEnabled
+          region={this.getMapRegion()}
+        >
+          <Polyline coordinates={this.state.routeCoordinates} strokeWidth={5} />
+          <Marker.Animated
+            ref={marker => {
+              this.marker = marker;
+            }}
+            coordinate={this.state.coordinate}
+          />
+        </MapView>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={[styles.bubble, styles.button]}>
+            <Text style={styles.bottomBarContent}>
+              {parseFloat(this.state.distanceTravelled).toFixed(2)} km
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
   }
-
-  return token;
 }
+
+const styles = StyleSheet.create({
+  container: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: "flex-end",
+    alignItems: "center"
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject
+  },
+  bubble: {
+    flex: 1,
+    backgroundColor: "rgba(255,255,255,0.7)",
+    paddingHorizontal: 18,
+    paddingVertical: 12,
+    borderRadius: 20
+  },
+  latlng: {
+    width: 200,
+    alignItems: "stretch"
+  },
+  button: {
+    width: 80,
+    paddingHorizontal: 12,
+    alignItems: "center",
+    marginHorizontal: 10
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    marginVertical: 20,
+    backgroundColor: "transparent"
+  }
+});
+
+export default AnimatedMarkers;
+
+
+
+
 

@@ -88,6 +88,20 @@ console.log(newCoordinate)
     navigator.geolocation.clearWatch(this.watchID);
   }
 
+ componentDidUpdate(){
+    fetch("http://10.0.2.2:8080/users/"+`${this.props.user.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({latitude:this.state.latitude,longitude:this.state.longitude}),
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+       console.log(data,"data")
+      })   
+  }
+
   getMapRegion = () => ({
     latitude: this.state.latitude,
     longitude: this.state.longitude,
@@ -165,3 +179,7 @@ const styles = StyleSheet.create({
 });
 
 export default AnimatedMarkers;
+
+
+
+
