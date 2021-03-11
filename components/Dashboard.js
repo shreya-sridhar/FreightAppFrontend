@@ -6,14 +6,14 @@ import Dashboard from 'react-native-dashboard';
 const data = [
   { name: 'Me', background: '#3498db', icon: 'user', iconColor: '#0d47a1' },
   {
-    name: 'Family',
+    name: 'Pending Delivery',
     background: '#b71c1c',
     icon: 'gratipay',
     styleIcon: { color: '#0d47a1' },
   },
-  { name: 'Lovely', background: '#ffeb3b', icon: 'heart' },
+  { name: 'Delivered Items', background: '#ffeb3b', icon: 'heart' },
   {
-    name: 'Team',
+    name: 'Spends',
     background: '#4caf50',
     icon: 'users',
     styleName: { color: '#0d47a1', fontWeight: 'bold' },

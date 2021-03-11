@@ -39,43 +39,43 @@ export default class App extends React.Component {
     await Promise.all([...imageAssets]);
   }
 
-  componentDidMount() {
-    // const getData = async () => {
-    //   try {
-    //     console.log("storage on mount");
-    //     const jsonValue = await AsyncStorage.getItem("@storage_Key");
-    //     return jsonValue != null ? JSON.parse(jsonValue) : null;
-    //   } catch (e) {
-    //     // error reading value
-    //   }
-    // };
-    // if (getData) {
-    //   this.persistUser(getData);
-    // }
-  }
+  // componentDidMount() {
+  //   const getData = async () => {
+  //     try {
+  //       console.log("storage on mount");
+  //       const jsonValue = await AsyncStorage.getItem("@storage_Key");
+  //       return jsonValue != null ? JSON.parse(jsonValue) : null;
+  //     } catch (e) {
+  //       // error reading value
+  //     }
+  //   };
+  //   if (getData) {
+  //     this.persistUser(getData);
+  //   }
+  // }
 
-  persistUser = (token) => {
-    console.log('persist')
-    fetch(API + "/persist", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((resp) => resp.json())
-      .then((data) => {
-        console.log(data)
-        if (data.username) {
-          const { username, id } = data;
-          this.setState({
-            user: {
-              username,
-              id,
-            },
-          });
-        }
-      });
-  };
+  // persistUser = (token) => {
+  //   console.log('persist')
+  //   fetch(API + "/profile", {
+  //     method: "GET",
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //     },
+  //   })
+  //     .then((resp) => resp.json())
+  //     .then((data) => {
+  //       console.log(data)
+  //       if (data.username) {
+  //         const { username, id } = data;
+  //         this.setState({
+  //           user: {
+  //             username,
+  //             id,
+  //           },
+  //         });
+  //       }
+  //     });
+  // };
 
   handleLoginOrSignup = (e, userInfo) => {
     console.log("wru");
@@ -89,7 +89,7 @@ export default class App extends React.Component {
   handleLogin = (e, userInfo) => {
     e.preventDefault();
     console.log("yoyoyoyoyoy");
-    fetch(API + "/login", {
+    fetch("http://10.0.2.2:8080" + "/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -107,7 +107,7 @@ export default class App extends React.Component {
   handleSignup = (e, userInfo) => {
     e.preventDefault();
     console.log("signup");
-    fetch(API + "/signup", {
+    fetch("http://10.0.2.2:8080" + "/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -148,7 +148,7 @@ export default class App extends React.Component {
           console.log(jsonValue, "erorr");
         }
       };
-      storeData(data.user);
+      storeData(data.jwt);
     } else if (data.error) {
       console.log("Err");
       this.setState({

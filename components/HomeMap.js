@@ -7,10 +7,11 @@ import {
   TouchableOpacity,
   Switch,
   View,
+  StyleSheet,
 } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import img from "C:/Users/shrey/FreightApp/assets/images/comfort.jpeg";
-import img1 from "C:/Users/shrey/FreightApp/assets/images/comfort.jpeg";
+import img1 from "C:/Users/shrey/FreightApp/assets/images/truck2.png";
 import FindPlaces from "C:/Users/shrey/FreightApp/components/FindPlaces.js";
 import RaspberryStrip from "C:/Users/shrey/FreightApp/components/RaspberryStrip.js";
 import Booking from "C:/Users/shrey/FreightApp/components/Booking.js";
@@ -20,34 +21,55 @@ import { render } from "react-dom";
 import Geocoder from "react-native-geocoding";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { faThList } from "@fortawesome/free-solid-svg-icons";
-const GOOGLE_MAPS_APIKEY = "dummy";
+const GOOGLE_MAPS_APIKEY = "AIzaSyC8whO4wSgNifJRFnCKMwVml2yB6AtbQ-8";
 const cars = [
   {
     id: "0",
     type: "UberX",
-    latitude: 28.450627,
-    longitude: -16.263045,
+    latitude: 37.7749,
+    longitude: -122.4194,
     heading: 47,
   },
   {
     id: "1",
     type: "Comfort",
-    latitude: 28.456312,
-    longitude: -16.252929,
+    latitude: 37.3382,
+    longitude: -121.8863,
     heading: 190,
   },
   {
     id: "2",
     type: "UberXL",
-    latitude: 28.456208,
-    longitude: -16.259098,
+    latitude: 32.7157,
+    longitude: -117.1611,
     heading: 99,
   },
   {
     id: "3",
     type: "Comfort",
-    latitude: 28.450627,
-    longitude: -16.263045,
+    latitude: 37.3861,
+    longitude: -122.0839,
+    heading: 120,
+  },
+  {
+    id: "4",
+    type: "Comfort",
+    latitude: 37.5485,
+    longitude: -121.9886,
+    heading: 120,
+  },
+  {
+    id: "5",
+    type: "Comfort",
+    latitude: 37.5630,
+    longitude: -122.3255,
+    heading: 120,
+  },
+  {
+    id: "6",
+    type: "Comfort",
+    latitude: 37.4848,
+    longitude: -122.2281,
     heading: 120,
   },
 ];
@@ -63,7 +85,11 @@ export default class HomeMap extends React.Component {
     // vehicle_type: "Standard Truck (6ft)",
     // users: this.props.users,
     pickup_date: null,
-    pickup_time: null
+    pickup_time: null,
+    start_lat: null,
+    start_lng: null,
+    end_lat: null,
+    end_lng: null,
   };
 
   toggleSwitch = (value) => {
@@ -120,7 +146,7 @@ export default class HomeMap extends React.Component {
   };
 
   setOrigin = (data, details) => {
-    console.log("set origin")
+    console.log("set origin");
     this.setState({ origin: data.description });
   };
 
@@ -129,23 +155,43 @@ export default class HomeMap extends React.Component {
   };
 
   getDate = (date) => {
-    console.log("herre")
+    console.log("herre");
     this.setState({ pickup_date: date, pickup_time: date });
   };
 
-  combined = () => {
-    this.props.getRideData(this.state)
-    this.props.findDriver()
-    this.props.navigation.navigate("Booking")
-  }
+  getLatLng = async () => {
+    console.log("inside latlng")
+    Geocoder.init(GOOGLE_MAPS_APIKEY);
+    await Geocoder.from(this.state.origin).then(async(json1) => {
+      Geocoder.init(GOOGLE_MAPS_APIKEY);
+      await Geocoder.from(this.state.destination).then((json2) => {
+        var location = json2.results[0].geometry.location;
+        let end_lat = location.lat;
+        let end_lng = location.lng;
+        var location = json1.results[0].geometry.location;
+        let start_lat = location.lat;
+        let start_lng = location.lng;
+        console.log(start_lat)
+        this.setState({
+          start_lat: start_lat,
+          start_lng: start_lng,
+          end_lat: end_lat,
+          end_lng: end_lng,
+        });
+      });
+    });
+  };
+
+  combined =  async () => {
+    await this.getLatLng();
+    console.log("lat",this.state.start_lat)
+    await this.props.route.params.catId.getRideData(this.state)
+    await this.props.route.params.catId.findDriver()
+    console.log(this.props)
+     this.props.route.params.catId.navigation.navigate("Booking")
+  };
 
   render() {
-    console.log("HomeMap this.props.id", this.state.pickup_date);
-    console.log("HomeMap user", this.props.user);
-    console.log("origin",this.state.origin)
-    console.log("destination",this.state.destination)
-    console.log("time",this.state.pickup_time)
-    console.log("date",this.state.pickup_date)
     return (
       <>
         <View>
@@ -162,53 +208,20 @@ export default class HomeMap extends React.Component {
             value={this.state.switchValue}
           />
         </View>
-        <FindPlaces
-          getDate={this.getDate}
-          latitude={this.state.latitude}
-          longitude={this.state.longitude}
-          searchFocused={this.searchFocused}
-          onFocus={this.onFocus}
-          onBlur={this.onBlur}
-          setOrigin={this.setOrigin}
-          setDestination={this.setDestination}
-          destination={this.destination}
-        />
         <MapView
-          style={{ width: "100%", height: "50%" }}
+          style={{ width: "100%",height: "56%" , position: "absolute",
+          top: Platform.select({ ios: 20, android: 150 })}}
           provider={PROVIDER_GOOGLE}
           showsUserLocation={true}
           initialRegion={{
             // placeId: this.state.sourceId,
             latitude: this.state.latitude,
             longitude: this.state.longitude,
-            latitudeDelta: 0.0222,
-            longitudeDelta: 0.0121,
+            latitudeDelta: 0.5,
+            longitudeDelta: 0.5,
           }}
         >
-          {/* {this.state.latitude?<Marker
-              // key='current loc'
-              coordinate={{ latitude: this.state.latitude, longitude: this.state.longitude }}
-            />:null} */}
-          {this.state.latitude ? (
-            <Marker
-              // key='current loc'
-              coordinate={{
-                latitude: this.state.latitude,
-                longitude: this.state.longitude,
-              }}
-            >
-              <Image
-                style={{
-                  width: 70,
-                  height: 70,
-                  resizeMode: "contain",
-                }}
-                source={img1}
-              />
-            </Marker>
-          ) : null}
-
-          {cars.map((car) => (
+           {cars.map((car) => (
             <Marker
               key={car.id}
               coordinate={{ latitude: car.latitude, longitude: car.longitude }}
@@ -217,28 +230,74 @@ export default class HomeMap extends React.Component {
                 style={{
                   width: 70,
                   height: 70,
-                  resizeMode: "contain",
-                  transform: [
-                    {
-                      rotate: `${car.heading}deg`,
-                    },
-                  ],
+                  resizeMode: "contain"
                 }}
-                source={img}
-              />
+                source={img1}
+              /> 
             </Marker>
           ))}
+
+          {this.state.latitude?<Marker
+              // key='current loc'
+              coordinate={{ latitude: this.state.latitude, longitude: this.state.longitude }}
+            />:null} 
+        {this.state.latitude ? (
+            <Marker
+              // key='current loc'
+              coordinate={{
+                latitude: this.state.latitude,
+                longitude: this.state.longitude,
+              }}
+            >
+              {/* <Image
+                style={{
+                  width: 70,
+                  height: 70,
+                  resizeMode: "contain",
+                }}
+                source={img1}
+              /> */}
+            </Marker>
+          ) : null}
+
         </MapView>
-        <RaspberryStrip />
-        <View onPress={() => this.getDate}>
-            <Button
-              title="CONTINUE"
-              onPress = {this.combined}
-            />
+        <View style={styles.bottom} onPress={() => this.getDate}>
+          <RaspberryStrip />
+          <Button title="CONTINUE" onPress={this.combined} />
+        </View>
+        <View
+          keyboardShouldPersistTaps="always"
+          style={{
+            padding: 0,
+            margin: 0,
+            position: "absolute",
+            top: 2,
+            width: "100%",
+          }}
+        >
+          <FindPlaces
+            getDate={this.getDate}
+            latitude={this.state.latitude}
+            longitude={this.state.longitude}
+            searchFocused={this.searchFocused}
+            onFocus={this.onFocus}
+            onBlur={this.onBlur}
+            setOrigin={this.setOrigin}
+            setDestination={this.setDestination}
+            destination={this.destination}
+          />
         </View>
       </>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  bottom: {
+    flex: 1,
+    justifyContent: "flex-end",
+    marginBottom: 0,
+  },
+});
 
 

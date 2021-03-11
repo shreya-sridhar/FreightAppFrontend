@@ -29,13 +29,18 @@ const App = (props) => {
   };
 
   return (
-    <View style={{height:'20%'}}>
+    <View style= {{
+      position: "absolute",
+      top: Platform.select({ ios: 20, android: 530 }),
+      width: "100%",
+      zIndex:1
+    }}>
       <View style = {{width:'100%',flexDirection: 'row',alignContent:'center',justifyContent: 'center'}}>
       <View>
-        <Button style={{width:'50%'}} onPress={showDatepicker} title="Select Date" />
+        <Button style={{width:'100%'}} onPress={showDatepicker} title="Select Date" />
       </View>
       <View>
-        <Button style={{width:'50%'}} onPress={showTimepicker} title="Select Time" />
+        <Button style={{width:'100%'}} onPress={showTimepicker} title="Select Time" />
       </View>
       </View>
       {show && (

@@ -44,8 +44,9 @@ export default function App() {
         alignItems: 'center',
         justifyContent: 'space-around',
       }}>
-      <Text>Your expo push token: {expoPushToken}</Text>
+      {/* <Text>Your expo push token: {expoPushToken}</Text> */}
       <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Your Booking is confirmed for </Text>
         <Text>Title: {notification && notification.request.content.title} </Text>
         <Text>Body: {notification && notification.request.content.body}</Text>
         <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text>
@@ -82,6 +83,7 @@ async function sendPushNotification(expoPushToken) {
 }
 
 async function registerForPushNotificationsAsync() {
+  console.log()
   let token;
   if (Constants.isDevice) {
     const { status: existingStatus } = await Notifications.getPermissionsAsync();

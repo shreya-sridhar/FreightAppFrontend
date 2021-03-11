@@ -1,105 +1,114 @@
-import React from "react";
-import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
-import MapViewDirections from "react-native-maps-directions";
-import { StyleSheet, Image, Text, Button } from "react-native";
-import img from "C:/Users/shrey/FreightApp/assets/images/comfort.jpeg";
-import Cars from "C:/Users/shrey/FreightApp/components/Cars.js";
 
-const GOOGLE_MAPS_APIKEY = "AIzaSyC0UZckU_eK8heofiWpXTUYU-IpJo0KhnI";
+import Constants from 'expo-constants';
+import * as Notifications from 'expo-notifications';
+import React, { useState, useEffect, useRef } from 'react';
+import { Text, View, Button, Platform } from 'react-native';
 
-class ConfirmBooking extends React.Component {
-  state = {
-    driver_lat: 28.450627,
-    driver_lng: -16.263045,
-  };
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
-  // componentDidMount() {
-  //   // this.setState(
-  //   //   {
-  //   //     driver_lat:parseInt(this.props.navigation.state.params.users[0].latitude),
-  //   //     driver_lng:parseInt(this.props.navigation.state.params.users[0].longitude)
-  //   //   }
-  //   // )
-  //   fetch("http://10.0.2.2:8080/rides", {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //     body: JSON.stringify({
-  //       pickup_location: this.props.origin,
-  //       drop_location: this.props.destination,
-  //       pickup_time: this.props.pickup_time,
-  //       vehicle_type: this.props.vehicle,
-  //       driver: this.props.driver,
-  //       customer: this.props.customer,
-  //     }),
-  //   })
-  //     .then((resp) => resp.json())
-  //     .then((data) => {
-  //       // let newOrders = this.state.order.concat(data)
-  //       // this.setState({orders:newOrders})
-  //       console.log(data);
-  //     });
-  // }
+export default function App() {
+  const [expoPushToken, setExpoPushToken] = useState('');
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
 
-  render() {
-    return (
-      <>
-        <Text>Hello</Text>
-        {/* <Text>{this.props.navigation.state.params.origin}</Text>
-        <Text>{this.props.navigation.state.params.destination}</Text> */}
-        {/* <MapView
-      style={{width: '100%', height: '54%'}}
-      provider={PROVIDER_GOOGLE}
-      showsUserLocation={true}
-      
-      initialRegion={{
-        latitude: this.state.driver_lat,
-        // parseInt(this.props.navigation.state.params.users[0].latitude),
-        //{this.state.latitude}
-        longitude: this.state.driver_lng,
-        // parseInt(this.props.navigation.state.params.users[0].longitude),
-        latitudeDelta: 0.0222,
-        longitudeDelta: 0.0121 ,
-      }}/> */}
+  useEffect(() => {
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
 
-        {/* <Text>{this.props.users}</Text> */}
-        {/* <MapView
-      style={{width: '100%', height: '54%'}}
-      provider={PROVIDER_GOOGLE}
-      showsUserLocation={true}
-      
-      initialR(routerprops) =>egion={{
-        latitude: start_lat,
-        longitude: start_lng,
-        latitudeDelta: 0.0222,
-        longitudeDelta: 0.0121 ,
+    // This listener is fired whenever a notification is received while the app is foregrounded
+    notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+      setNotification(notification);
+    });
+
+    // This listener is fired whenever a user taps on or interacts with a notification (works when app is foregrounded, backgrounded, or killed)
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+      console.log(response);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener);
+      Notifications.removeNotificationSubscription(responseListener);
+    };
+  }, []);
+
+  return (
+    <View
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'space-around',
       }}>
-    <Marker
-          coordinate={{latitude: start_lat, longitude: start_lng}}
-        ></Marker>
-    <Marker
-          coordinate={{latitude: end_lat, longitude: end_lng}}
-        ></Marker>
-          <Image
-            style={{
-              width: 20,
-              height: 20,
-              resizeMode: 'contain'
-            }}
-            source={img}
-          />  
-     <MapViewDirections
-        origin={{latitude: start_lat, longitude: start_lng}}
-        destination={{latitude: end_lat, longitude: end_lng}}
-        apikey={GOOGLE_MAPS_APIKEY}
-        strokeWidth={5}
-        strokeColor="black"
+      <Text>Your expo push token: {expoPushToken}</Text>
+      <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Title: {notification && notification.request.content.title} </Text>
+        <Text>Body: {notification && notification.request.content.body}</Text>
+        <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text>
+      </View>
+      <Button
+        title="Get Ride Details"
+        onPress={async () => {
+          await sendPushNotification(expoPushToken);
+        }}
       />
-      </MapView> */}
-      </>
-    );
-  }
+    </View>
+  );
 }
 
-export default ConfirmBooking;
+// Can use this function below, OR use Expo's Push Notification Tool-> https://expo.io/notifications
+async function sendPushNotification(expoPushToken) {
+  const message = {
+    to: expoPushToken,
+    sound: 'default',
+    title: 'Original Title',
+    body: 'And here is the body!',
+    data: { someData: 'goes here' },
+  };
+
+  await fetch('https://exp.host/--/api/v2/push/send', {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Accept-encoding': 'gzip, deflate',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(message),
+  });
+}
+
+async function registerForPushNotificationsAsync() {
+  let token;
+  if (Constants.isDevice) {
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log(token);
+  } else {
+    alert('Must use physical device for Push Notifications');
+  }
+
+  if (Platform.OS === 'android') {
+    Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
+
+  return token;
+}
+

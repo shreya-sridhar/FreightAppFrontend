@@ -11,13 +11,13 @@
       "backgroundColor": "#ffffff",
       "ios": {
         "config": {
-          "googleMapsApiKey": "AIzaSyBGN57DmIxX4TF-37jbH1JA_ymN-Nm6Ij4"
+          "googleMapsApiKey": "AIzaSyC8whO4wSgNifJRFnCKMwVml2yB6AtbQ-8"
         }
       },
       "android": {
         "config": {
           "googleMaps": {
-            "apiKey": "AIzaSyBGN57DmIxX4TF-37jbH1JA_ymN-Nm6Ij4"
+            "apiKey": "AIzaSyC8whO4wSgNifJRFnCKMwVml2yB6AtbQ-8"
           }
         }
       }
@@ -36,6 +36,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
+      "permissions": ["ACCESS_BACKGROUND_LOCATION"],
       "package": "donewithit.com"
     },
     "web": {

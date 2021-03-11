@@ -9,11 +9,9 @@ const workPlace = { description: 'Work', geometry: { location: { lat: 48.8496818
 const currentLocation = { description: 'currentLocation', geometry: { location: { lat: props.latitude, lng: props.longitude } }}; 
 
   return (
-    <>
-    {/* <ScrollView keyboardShouldPersistTaps="handled" style={{padding:0,margin:0}}> */}
-    {/* <View keyboardShouldPersistTaps="handled" style={{padding:0,margin:0}}> */}
+    <View style={{height:'100%'}} keyboardShouldPersistTaps="always">
     <GooglePlacesAutocomplete
-     keyboardShouldPersistTaps="handled"
+     keyboardShouldPersistTaps="always"
     //  textInputProps={{ onBlur: () => {} }}
       placeholder='Enter Pickup Location'
       minLength={2} // minimum length of text to search
@@ -32,7 +30,7 @@ const currentLocation = { description: 'currentLocation', geometry: { location: 
  
       query={{
         // available options: https://developers.google.com/places/web-service/autocomplete
-        key: 'AIzaSyC0UZckU_eK8heofiWpXTUYU-IpJo0KhnI',
+        key: 'AIzaSyCjdO2_2OfJU4NUOStC19xZER-SfvPh9Zs',
         language: 'en', // language of the results
         types: '(cities)' // default: 'geocode'
       }}
@@ -115,8 +113,6 @@ const currentLocation = { description: 'currentLocation', geometry: { location: 
       debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
       renderLeftButton={() => <Text>From?</Text>}
     />
-    {/* </View> */}
-    {/* </ScrollView> */}
     <GooglePlacesAutocomplete
     placeholder='Enter Dropoff Location'
     minLength={2} // minimum length of text to search
@@ -135,23 +131,69 @@ const currentLocation = { description: 'currentLocation', geometry: { location: 
 
     query={{
       // available options: https://developers.google.com/places/web-service/autocomplete
-      key: 'AIzaSyC0UZckU_eK8heofiWpXTUYU-IpJo0KhnI',
+      key: 'AIzaSyCjdO2_2OfJU4NUOStC19xZER-SfvPh9Zs',
       language: 'en', // language of the results
       types: '(cities)' // default: 'geocode'
     }}
 
-    styles={{
+    const styles = {{
+      container: {
+        position: "absolute",
+        top: Platform.select({ ios: 130, android: 100 }),
+        width: "100%"
+      },
       textInputContainer: {
-        width: '100%',
-        padding: 0,
+        flex: 1,
+        backgroundColor: "transparent",
+        height: 54,
+        marginHorizontal: 20,
+        borderTopWidth: 0,
+        borderBottomWidth: 0
+      },
+      textInput: {
+        height: 54,
+        margin: 0,
+        borderRadius: 0,
+        paddingTop: 0,
+        paddingBottom: 0,
+        paddingRight: 20,
+        paddingLeft: 20,
+        marginTop: 0,
+        marginLeft: 0,
+        marginRight: 0,
+        // elevation: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+          x: 0,
+          y: 0
+        },
+        shadowRadius: 15,
+        borderWidth: 1,
+        borderColor: "#ddd",
+        fontSize: 18
+      },
+      listView: {
+        borderWidth: 1,
+        borderColor: "#ddd",
+        backgroundColor: "#fff",
+        marginHorizontal: 20,
+        elevation: 5,
+        shadowColor: "#000",
+        shadowOffset: {
+          x: 0,
+          y: 0
+        },
+        shadowRadius: 15,
+        marginTop: 10
       },
       description: {
-        fontWeight: 'bold'
+        fontSize: 14
       },
-      predefinedPlacesDescription: {
-        color: '#1faadb'
+      row: {
+        padding: 20,
+        height: 60
       }
-    }}
+}}
 
     currentLocation={true} // Will add a 'Current location' button at the top of the predefined places list
     currentLocationLabel="Current location"
@@ -171,12 +213,11 @@ const currentLocation = { description: 'currentLocation', geometry: { location: 
     debounce={200} // debounce the requests in ms. Set to 0 to remove debounce. By default 0ms.
     renderLeftButton={() => <Text>To?</Text>}
   />
-  <DateTime getDate = {props.getDate}/>
-  </>
+   <DateTime getDate = {props.getDate}/>
+   </View>
 
   );
 }
-
 
 export default GooglePlacesInput
 

@@ -1,74 +1,38 @@
 import React, { Component } from "react";
-import { FlatList, Text, ScrollView,Dimensions } from "react-native";
+import { FlatList, Text, ScrollView,Dimensions, Button, View} from "react-native";
 import { Card } from "react-native-elements";
-
-const data = [
-  {
-    imageUrl: "http://via.placeholder.com/160x160",
-    title: "something"
-  },
-  {
-    imageUrl: "http://via.placeholder.com/160x160",
-    title: "something two"
-  },
-  {
-    imageUrl: "http://via.placeholder.com/160x160",
-    title: "something three"
-  },
-  {
-    imageUrl: "http://via.placeholder.com/160x160",
-    title: "something four"
-  },
-  {
-    imageUrl: "http://via.placeholder.com/160x160",
-    title: "something five"
-  },
-  {
-    imageUrl: "http://via.placeholder.com/160x160",
-    title: "something six"
-  }
-];
+import {CardTen} from "react-native-card-ui"
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default class History extends Component {
     state = {
-      data: data
+      rides: this.props.route.params.catId.rides.filter(ride => ride.customer.id === this.props.route.params.catId.user.id)
     };
 
-    render() {
-        return (
-      //     <Card
-      //       title={null}
-      //       image={{ uri: "http://via.placeholder.com/160x160" }}
-      //       containerStyle={{ padding: 0, width: 175, height:175 }}
-      //     >
-      //        <Text style={{ marginBottom: 10 }}>
-      //   hello
-      // </Text>
-           
-      //     </Card>
-
-      <FlatList 
-data={this.state.data}
-renderItem={({ item: rowData }) => {
-  return (
-    <ScrollView>
-    <Card
-      title={null}
-      image={{ uri: rowData.imageUrl }}
-      containerStyle={{ padding: 0, width: Dimensions.get('window').width, height:175 }}
-    >
-      <Text style={{ marginBottom: 10 }}>
-        {rowData.title}
-      </Text>
-    </Card>
-    </ScrollView>
-  );
-}}
-keyExtractor={(item, index) => index}
-/>
-        );
-      }
+     render() {
+      console.log(this.props)
+      console.log(this.props.route.params.catId.rides.filter(ride => ride.customer.id === this.props.route.params.catId.user.id))
+      console.log(this.props.route.params.catId.rides.map(ride => ride.customer.id))
+      return (<ScrollView>
+        <Text style={{fontSize:20, textAlign:"center", marginTop:30}}>Ride History</Text>
+      {this.state.rides.map((ride) => (
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('BarCode',{ride_track_id:ride.id})}>
+          <CardTen title={`${ride.pickup_location} ---> ${ride.drop_location}`}
+          subTitle={ride.drop_location}
+          price={ride.actual_bill}
+          star={3}
+          starsFor={ride.pickup_time}>
+          </CardTen>
+          <View style={{width:100,justifyContent: 'center',alignItems: 'center',marginLeft:240}}>
+          <Button style={{width:50,justifyContent: 'center',alignItems: 'center'}} onPress={() => this.props.navigation.navigate('BarCode',{ride_track_id:ride.id})} title="Add Tracking"/>
+          <Button style={{width:50,justifyContent: 'center',alignItems: 'center'}} onPress={() => this.props.navigation.navigate('DeliveryCheck',{ride_track_id:ride.id})} title="Check Status"/>
+          </View>
+          </TouchableOpacity>
+      ))}
+      </ScrollView>);
+    }
 }
+
 
 
  

@@ -56,7 +56,7 @@ function runTiming(clock, value, dest) {
 class MusicApp extends Component {
   state = {
     login: true,
-    username: "shreya",
+    username: "random",
     password: "123",
   };
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, Image, StyleSheet } from "react-native";
+import {Text, Dimensions, Image, StyleSheet } from "react-native";
 
 const { width } = Dimensions.get("window");
 const ratio = 228 / 362;
@@ -26,22 +26,23 @@ interface CardProps {
 }
 
 export default ({ type }: CardProps) => {
+  <Text style={{fontSize:20}}>Choose Payment Mode</Text>
   let source: number;
   switch (type) {
     case Cards.Card1:
-      source = require("C:/Users/shrey/FreightApp/assets/images/small_truck.jpg");
+      source = require("C:/Users/shrey/FreightApp/assets/card1.png");
       break;
     case Cards.Card2:
-      source = require("C:/Users/shrey/FreightApp/assets/images/trailer.png");
+      source = require("C:/Users/shrey/FreightApp/assets/card2.png");
       break;
     case Cards.Card3:
-      source = require("C:/Users/shrey/FreightApp/assets/images/truck6ft.jpg");
+      source = require("C:/Users/shrey/FreightApp/assets/card3.png");
       break;
     case Cards.Card4:
-      source = require("C:/Users/shrey/FreightApp/assets/images/flatbed.png");
+      source = require("C:/Users/shrey/FreightApp/assets/card4.png");
       break;
     case Cards.Card5:
-      source = require("C:/Users/shrey/FreightApp/assets/images/ref_6.jpg");
+      source = require("C:/Users/shrey/FreightApp/assets/card5.png");
       break;
     case Cards.Card6:
       source = require("C:/Users/shrey/FreightApp/assets/card6.png");
@@ -49,6 +50,10 @@ export default ({ type }: CardProps) => {
     default:
       throw Error("Invalid card style");
   }
-  return <Image style={styles.card} {...{ source }} />;
+  {return (
+    <>
+  <Image style={styles.card} {...{ source }} />
+  </>
+  )};
 };
 
