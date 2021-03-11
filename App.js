@@ -50,10 +50,10 @@ class App extends React.Component {
 
   componentDidMount() {
     console.log("before fetch");
-    fetch("http://10.0.2.2:8080/users")
+    fetch("https://radiant-meadow-46440.herokuapp.com/users")
       .then((res) => res.json())
       .then((data1) =>
-        fetch("http://10.0.2.2:8080/rides")
+        fetch("https://radiant-meadow-46440.herokuapp.com/rides")
           .then((res) => res.json())
           .then((data2) => {
             console.log("nooooo");
@@ -83,7 +83,7 @@ class App extends React.Component {
       let token = await AsyncStorage.getItem("@storage_Key");
       let test = JSON.parse(token);
       console.log("test", test);
-      await fetch("http://10.0.2.2:8080/driver", {
+      await fetch("https://radiant-meadow-46440.herokuapp.com/driver", {
         method: "GET",
         headers: { Authorization: `Bearer ${test}` },
       })
@@ -120,7 +120,7 @@ class App extends React.Component {
 
   persistUser = (token) => {
     console.log("persist");
-    fetch("http://10.0.2.2:8080" + "/profile", {
+    fetch("https://radiant-meadow-46440.herokuapp.com" + "/profile", {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -144,7 +144,7 @@ class App extends React.Component {
 
   bookRide = async () => {
     console.log("booking ride now");
-    await fetch("http://10.0.2.2:8080/rides", {
+    await fetch("https://radiant-meadow-46440.herokuapp.com/rides", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

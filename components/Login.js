@@ -89,7 +89,7 @@ export default class App extends React.Component {
   handleLogin = (e, userInfo) => {
     e.preventDefault();
     console.log("yoyoyoyoyoy");
-    fetch("http://10.0.2.2:8080" + "/login", {
+    fetch("https://radiant-meadow-46440.herokuapp.com" + "/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -107,7 +107,7 @@ export default class App extends React.Component {
   handleSignup = (e, userInfo) => {
     e.preventDefault();
     console.log("signup");
-    fetch("http://10.0.2.2:8080" + "/signup", {
+    fetch("https://radiant-meadow-46440.herokuapp.com" + "/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

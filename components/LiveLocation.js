@@ -5,13 +5,13 @@ import {
   Text,
   TouchableOpacity,
   Platform,
-  PermissionsAndroid
+  PermissionsAndroid,
 } from "react-native";
 import MapView, {
   Marker,
   AnimatedRegion,
   Polyline,
-  PROVIDER_GOOGLE
+  PROVIDER_GOOGLE,
 } from "react-native-maps";
 import haversine from "haversine";
 
@@ -36,8 +36,8 @@ class AnimatedMarkers extends React.Component {
         latitude: LATITUDE,
         longitude: LONGITUDE,
         latitudeDelta: 0,
-        longitudeDelta: 0
-      })
+        longitudeDelta: 0,
+      }),
     };
   }
 
@@ -45,21 +45,18 @@ class AnimatedMarkers extends React.Component {
     const { coordinate } = this.state;
 
     this.watchID = navigator.geolocation.watchPosition(
-      position => {
+      (position) => {
         const { routeCoordinates, distanceTravelled } = this.state;
         const { latitude, longitude } = position.coords;
 
         const newCoordinate = {
           latitude,
-          longitude
+          longitude,
         };
-console.log(newCoordinate)
+        //console.log(newCoordinate);
         if (Platform.OS === "android") {
           if (this.marker) {
-            this.marker.animateMarkerToCoordinate(
-              newCoordinate,
-              500
-            );
+            this.marker.animateMarkerToCoordinate(newCoordinate, 500);
           }
         } else {
           coordinate.timing(newCoordinate).start();
@@ -71,15 +68,15 @@ console.log(newCoordinate)
           routeCoordinates: routeCoordinates.concat([newCoordinate]),
           distanceTravelled:
             distanceTravelled + this.calcDistance(newCoordinate),
-          prevLatLng: newCoordinate
+          prevLatLng: newCoordinate,
         });
       },
-      error => console.log(error),
+      (error) => console.log(error),
       {
         enableHighAccuracy: true,
         timeout: 20000,
         maximumAge: 1000,
-        distanceFilter: 10
+        distanceFilter: 10,
       }
     );
   }
@@ -88,28 +85,36 @@ console.log(newCoordinate)
     navigator.geolocation.clearWatch(this.watchID);
   }
 
- componentDidUpdate(){
-    fetch("http://10.0.2.2:8080/users/"+`${this.props.user.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({latitude:this.state.latitude,longitude:this.state.longitude}),
-    })
+  componentDidUpdate() {
+    //console.log(this.props.user.id, this.props.user.name);
+    fetch(
+      "https://radiant-meadow-46440.herokuapp.com/users/" +
+        `${this.props.user.id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          latitude: this.state.latitude,
+          longitude: this.state.longitude,
+        }),
+      }
+    )
       .then((resp) => resp.json())
       .then((data) => {
-       console.log(data,"data")
-      })   
+        console.log("Driver data received");
+      });
   }
 
   getMapRegion = () => ({
     latitude: this.state.latitude,
     longitude: this.state.longitude,
     latitudeDelta: LATITUDE_DELTA,
-    longitudeDelta: LONGITUDE_DELTA
+    longitudeDelta: LONGITUDE_DELTA,
   });
 
-  calcDistance = newLatLng => {
+  calcDistance = (newLatLng) => {
     const { prevLatLng } = this.state;
     return haversine(prevLatLng, newLatLng) || 0;
   };
@@ -127,7 +132,7 @@ console.log(newCoordinate)
         >
           <Polyline coordinates={this.state.routeCoordinates} strokeWidth={5} />
           <Marker.Animated
-            ref={marker => {
+            ref={(marker) => {
               this.marker = marker;
             }}
             coordinate={this.state.coordinate}
@@ -149,37 +154,33 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: "flex-end",
-    alignItems: "center"
+    alignItems: "center",
   },
   map: {
-    ...StyleSheet.absoluteFillObject
+    ...StyleSheet.absoluteFillObject,
   },
   bubble: {
     flex: 1,
     backgroundColor: "rgba(255,255,255,0.7)",
     paddingHorizontal: 18,
     paddingVertical: 12,
-    borderRadius: 20
+    borderRadius: 20,
   },
   latlng: {
     width: 200,
-    alignItems: "stretch"
+    alignItems: "stretch",
   },
   button: {
     width: 80,
     paddingHorizontal: 12,
     alignItems: "center",
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   buttonContainer: {
     flexDirection: "row",
     marginVertical: 20,
-    backgroundColor: "transparent"
-  }
+    backgroundColor: "transparent",
+  },
 });
 
 export default AnimatedMarkers;
-
-
-
-

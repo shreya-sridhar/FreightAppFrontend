@@ -1,4 +1,3 @@
-
 import React from "react";
 import {
   StyleSheet,
@@ -7,13 +6,13 @@ import {
   TouchableOpacity,
   Platform,
   PermissionsAndroid,
-  Button
+  Button,
 } from "react-native";
 import MapView, {
   Marker,
   AnimatedRegion,
   Polyline,
-  PROVIDER_GOOGLE
+  PROVIDER_GOOGLE,
 } from "react-native-maps";
 import haversine from "haversine";
 
@@ -32,17 +31,18 @@ class AnimatedMarkers extends React.Component {
       driver_lat: LATITUDE,
       driver_lng: LONGITUDE,
       latitude: LATITUDE,
-      status:true,
+      status: true,
       longitude: LONGITUDE,
       routeCoordinates: [],
+      driverCoordinates: [],
       distanceTravelled: 0,
       prevLatLng: {},
       coordinate: new AnimatedRegion({
         latitude: LATITUDE,
         longitude: LONGITUDE,
         latitudeDelta: 0,
-        longitudeDelta: 0
-      })
+        longitudeDelta: 0,
+      }),
     };
   }
 
@@ -50,21 +50,18 @@ class AnimatedMarkers extends React.Component {
     const { coordinate } = this.state;
 
     this.watchID = navigator.geolocation.watchPosition(
-      position => {
+      (position) => {
         const { routeCoordinates, distanceTravelled } = this.state;
         const { latitude, longitude } = position.coords;
 
         const newCoordinate = {
           latitude,
-          longitude
+          longitude,
         };
-console.log(newCoordinate)
+        //console.log(newCoordinate);
         if (Platform.OS === "android") {
           if (this.marker) {
-            this.marker.animateMarkerToCoordinate(
-              newCoordinate,
-              500
-            );
+            this.marker.animateMarkerToCoordinate(newCoordinate, 500);
           }
         } else {
           coordinate.timing(newCoordinate).start();
@@ -76,15 +73,15 @@ console.log(newCoordinate)
           routeCoordinates: routeCoordinates.concat([newCoordinate]),
           distanceTravelled:
             distanceTravelled + this.calcDistance(newCoordinate),
-          prevLatLng: newCoordinate
+          prevLatLng: newCoordinate,
         });
       },
-      error => console.log(error),
+      (error) => console.log(error),
       {
         enableHighAccuracy: true,
         timeout: 20000,
         maximumAge: 1000,
-        distanceFilter: 10
+        distanceFilter: 10,
       }
     );
   }
@@ -93,43 +90,81 @@ console.log(newCoordinate)
     navigator.geolocation.clearWatch(this.watchID);
   }
 
-  componentDidUpdate(){
-    fetch("http://10.0.2.2:8080/users/"+`${this.props.user.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({latitude:this.state.latitude,longitude:this.state.longitude}),
-    })
+  componentDidUpdate() {
+    fetch(
+      "https://radiant-meadow-46440.herokuapp.com/users/" +
+        `${this.props.user.id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          latitude: this.state.latitude,
+          longitude: this.state.longitude,
+        }),
+      }
+    )
       .then((resp) => resp.json())
       .then((data) => {
-       console.log(data,"data")
-      let d = data.filter(d => d.id === this.props.driver.id)
-      console.log(d,"d")
-      this.setState({driver_lat:d.latitude,driver_lng:d.longitude})
-      })   
+        // console.log("driverdata",data)
+        let d = data.filter((dr) => dr.id === this.props.driver.id);
+        let assigned_driver = d[0];
+        //console.log("d",d)
+        // console.log(d[0].name,"dname")
+        //console.log("drive me", this.props.driver);
+        // console.log(d[0].latitude,"dlat")
+        // console.log(d[0].latitude,"dlng")
+        // console.log("before",this.state.driverCoordinates)
+        if (
+          this.state.driver_lat != assigned_driver.latitude ||
+          this.state.driver_lng != assigned_driver.longitude
+        ) {
+          console.log(
+            this.state.driverCoordinates,
+            "this.state.driverCoordinates"
+          );
+          newdriverCoordinates = this.state.driverCoordinates.concat([
+            {
+              latitude: parseFloat(assigned_driver.latitude),
+              longitude: parseFloat(assigned_driver.longitude),
+            },
+          ]);
+          console.log(newdriverCoordinates, "newdriverCoordinates");
+          this.setState({
+            driver_lat: assigned_driver.latitude,
+            driver_lng: assigned_driver.longitude,
+            driverCoordinates: newdriverCoordinates,
+          });
+        }
+        //  console.log("after",this.state.driverCoordinates)
+      });
   }
 
   getMapRegion = () => ({
     latitude: this.state.latitude,
     longitude: this.state.longitude,
     latitudeDelta: LATITUDE_DELTA,
-    longitudeDelta: LONGITUDE_DELTA
+    longitudeDelta: LONGITUDE_DELTA,
   });
 
-  calcDistance = newLatLng => {
+  calcDistance = (newLatLng) => {
     const { prevLatLng } = this.state;
     return haversine(prevLatLng, newLatLng) || 0;
   };
 
   removeButton = () => {
-    this.setState({status:false})
-  }
+    this.setState({ status: false });
+  };
 
   render() {
+    //console.log("routecoord", this.state.routeCoordinates, "end here");
+    console.log("drivercoord", this.state.driverCoordinates, "drivercoord end");
     return (
       <View style={styles.container}>
-        {this.state.status && <Button title='yo' onPress={()=>this.removeButton}/>}
+        {this.state.status && (
+          <Button title="yo" onPress={() => this.removeButton} />
+        )}
         <MapView
           style={styles.map}
           provider={PROVIDER_GOOGLE}
@@ -138,9 +173,18 @@ console.log(newCoordinate)
           loadingEnabled
           region={this.getMapRegion()}
         >
-          <Polyline coordinates={this.state.routeCoordinates} strokeWidth={5} />
+          <Polyline
+            coordinates={this.state.routeCoordinates}
+            strokeWidth={5}
+            strokeColors={"black"}
+          />
+          <Polyline
+            coordinates={this.state.driverCoordinates}
+            strokeWidth={15}
+            strokeColor={"yellow"}
+          />
           <Marker.Animated
-            ref={marker => {
+            ref={(marker) => {
               this.marker = marker;
             }}
             coordinate={this.state.coordinate}
@@ -162,38 +206,33 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: "flex-end",
-    alignItems: "center"
+    alignItems: "center",
   },
   map: {
-    ...StyleSheet.absoluteFillObject
+    ...StyleSheet.absoluteFillObject,
   },
   bubble: {
     flex: 1,
     backgroundColor: "rgba(255,255,255,0.7)",
     paddingHorizontal: 18,
     paddingVertical: 12,
-    borderRadius: 20
+    borderRadius: 20,
   },
   latlng: {
     width: 200,
-    alignItems: "stretch"
+    alignItems: "stretch",
   },
   button: {
     width: 80,
     paddingHorizontal: 12,
     alignItems: "center",
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   buttonContainer: {
     flexDirection: "row",
     marginVertical: 20,
-    backgroundColor: "transparent"
-  }
+    backgroundColor: "transparent",
+  },
 });
 
 export default AnimatedMarkers;
-
-
-
-
-
