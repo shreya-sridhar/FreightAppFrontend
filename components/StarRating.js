@@ -22,23 +22,23 @@ class GeneralStarExample extends React.Component {
 
   render() {
     return (
-      <View>
+      <View style = {{margin:50}}>
        <TextInput  
-          style={{alignItems:'center',width:300,marginTop:200,height: 300,backgroundColor: 'lightyellow', fontSize: 20}}  
-          placeholder="Type here to translate!"  
+          style={{alignItems:'center',width:300,marginTop:100,height: 300, fontSize: 20}}  
+          placeholder="Did you enjoy your ride? Tell us!"  
           onChangeText={(text) => this.setState({text})}  
         />  
       <Text style={{fontSize: 50}}>  
           {/* {this.state.text.split(' ').map((word) => word && '🍕').join(' ')}   */}
       </Text>
-      <StarRating style={{padding:100}}
+      <StarRating
         disabled={false}
         maxStars={5}
         fullStarColor={'gold'}
         rating={this.state.starCount}
         selectedStar={(rating) => this.onStarRatingPress(rating)}
       />
-      <Button style={{padding:200}} title="SUBMIT FEEDBACK"/>
+      <Button style={{margin:100}} title="SUBMIT FEEDBACK"/>
       </View>
     );
   }

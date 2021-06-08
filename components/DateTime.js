@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Button, Platform} from 'react-native';
+import {View, Button, Platform, Dimensions, StyleSheet} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 const App = (props) => {
@@ -29,20 +29,13 @@ const App = (props) => {
   };
 
   return (
-    <View style= {{
-      position: "absolute",
-      top: Platform.select({ ios: 20, android: 530 }),
-      width: "100%",
-      zIndex:1
-    }}>
-      <View style = {{width:'100%',flexDirection: 'row',alignContent:'center',justifyContent: 'center'}}>
-      <View>
-        <Button style={{width:'100%'}} onPress={showDatepicker} title="Select Date" />
-      </View>
-      <View>
-        <Button style={{width:'100%'}} onPress={showTimepicker} title="Select Time" />
-      </View>
-      </View>
+    <View style= {styles.container}>
+      <View style={styles.buttonContainer}>
+                <Button title="Select Date" onPress = {showDatepicker} style={{position:"absolute",bottom:"250px"}}/>
+              </View>
+              <View style={styles.buttonContainer}>
+                <Button title="Select Time" onPress = {showTimepicker}/>
+              </View>
       {show && (
         <DateTimePicker
           testID="dateTimePicker"
@@ -58,3 +51,20 @@ const App = (props) => {
 };
 
 export default App;
+
+const styles = StyleSheet.create({
+  container: {
+      flex: 1,
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      position: "absolute",
+      top: Platform.select({ ios: 20, android: 700 }),
+      width: "100%",
+      zIndex:1
+  },
+  buttonContainer: {
+      flex: 1,
+      padding:2
+  }
+})

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "DoneWithIt",
-    "slug": "DoneWithIt",
+    "name": "FrieghtAppBookingShreya",
+    "slug": "frieghtappbookingshreya",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -36,11 +36,14 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "permissions": ["ACCESS_BACKGROUND_LOCATION"],
+      "permissions": [
+        "ACCESS_BACKGROUND_LOCATION"
+      ],
       "package": "donewithit.com"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": ""
   }
 }

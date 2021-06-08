@@ -20,17 +20,17 @@ const { COLORS, FONTS, SIZES } = theme;
 const onBoardings = [
     {
         title: "Book On Your Phone",
-        description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut",
+        description: "Book a carrier for your goods on you phone. Moving homes? Moving your stock? We got your back.",
         img: onboarding1
     },
     {
         title: "We Deliver",
-        description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut",
+        description: "Best in class trucks and good carriers to transport your goods handled by expert packers and loaders",
         img: onboarding2
     },
     {
         title: "Track Your Items",
-        description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut",
+        description: "All items are tracked by QR codes that can be tracked upon delivery",
         img: onboarding3
     }
 ];

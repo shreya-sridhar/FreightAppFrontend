@@ -25,30 +25,30 @@ export default function Profile() {
       <View
         style={
           styles.drawerContent
-        }
+        }              
       >
         <View style={styles.userInfoSection}>
           <Avatar.Image
             source={{
               uri:
-                'https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg',
+                'https://media-exp1.licdn.com/dms/image/C5603AQGWdq0-I-jvUQ/profile-displayphoto-shrink_200_200/0/1613096297140?e=1618444800&v=beta&t=ZAW28yPwm1d36Ei5VHV7LC2SgQ5ei5N8tGrNOlmluzc',
             }}
             size={50}
           />
-          <Title style={styles.title}>Dawid Urbaniak</Title>
-          <Caption style={styles.caption}>@trensik</Caption>
+          <Title style={styles.title}>Shreya </Title>
+          <Caption style={styles.caption}>@shreya</Caption>
           <View style={styles.row}>
             <View style={styles.section}>
               <Paragraph style={[styles.paragraph, styles.caption]}>
                 202
               </Paragraph>
-              <Caption style={styles.caption}>Following</Caption>
+              <Caption style={styles.caption}>Rides</Caption>
             </View>
             <View style={styles.section}>
-              <Paragraph style={[styles.paragraph, styles.caption]}>
+              {/* <Paragraph style={[styles.paragraph, styles.caption]}>
                 159
               </Paragraph>
-              <Caption style={styles.caption}>Followers</Caption>
+              <Caption style={styles.caption}>Followers</Caption> */}
             </View>
           </View>
         </View>
@@ -61,17 +61,17 @@ export default function Profile() {
                 size={size}
               />
             )}
-            label="Profile"
+            label="Customer Rating : 5"
             onPress={() => {}}
           />
           <DrawerItem
             icon={({ color, size }) => (
-              <MaterialCommunityIcons name="tune" color={color} size={size} />
+              <MaterialCommunityIcons name="account-outline" color={color} size={size} />
             )}
-            label="Preferences"
+            label="Driver Rating : 5"
             onPress={() => {}}
           />
-          <DrawerItem
+          {/* <DrawerItem
             icon={({ color, size }) => (
               <MaterialCommunityIcons
                 name="bookmark-outline"
@@ -81,7 +81,7 @@ export default function Profile() {
             )}
             label="Bookmarks"
             onPress={() => {}}
-          />
+          /> */}
         </Drawer.Section>
         <Drawer.Section title="Preferences">
           <TouchableRipple onPress={() => {}}>
@@ -92,14 +92,14 @@ export default function Profile() {
               </View>
             </View>
           </TouchableRipple>
-          <TouchableRipple onPress={() => {}}>
+          {/* <TouchableRipple onPress={() => {}}>
             <View style={styles.preference}>
               <Text>RTL</Text>
               <View pointerEvents="none">
                 <Switch value={false} />
               </View>
             </View>
-          </TouchableRipple>
+          </TouchableRipple> */}
         </Drawer.Section>
       </View>
     // </DrawerContentScrollView>

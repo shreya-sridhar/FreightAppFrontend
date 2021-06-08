@@ -41,9 +41,6 @@ export default class Booking extends React.Component {
   render() {
     return (
       <>
-        <Text>{this.state.start_lat}</Text>
-        <Text>{this.state.start_lng}</Text>
-        <Text>{showMap}</Text>
         <MapView
           style={{ width: "100%", height: "54%" }}
           provider={PROVIDER_GOOGLE}
@@ -94,12 +91,40 @@ export default class Booking extends React.Component {
           /> */}
         </MapView>
         {this.state.showPush && <PushNotification/>}
-        <View style={{width:200,alignContent:"center",justifyContent:"center"}}>{this.state.showPush && <Button style={{width:200}} onPress={() => this.props.routerprops.navigation.navigate("ConfirmBooking")} title="Live Location"></Button>}</View>
+        <View style={{width:200,alignItems: 'center',
+        justifyContent: 'center',left:95}}>{this.state.showPush && <Button style={{width:100}} onPress={() => this.props.routerprops.navigation.navigate("ConfirmBooking")} title="Live Location"></Button>}</View>
         <Cars selectVehicle={this.selectVehicle} />
         <Button title="CONFIRM BOOKING" onPress={this.combined} />
       </>
     );
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

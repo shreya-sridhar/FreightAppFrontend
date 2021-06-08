@@ -1,11 +1,23 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Dimensions, TextInput,TouchableHighlight } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  TextInput,
+  TouchableHighlight,
+} from "react-native";
 import Svg, { Image, Circle, ClipPath } from "react-native-svg";
 import Animated, { Easing } from "react-native-reanimated";
-import { TapGestureHandler, State } from "react-native-gesture-handler";
+import {
+  TapGestureHandler,
+  State,
+  TouchableOpacity,
+} from "react-native-gesture-handler";
 import { Button } from "react-native-paper";
 // import { white } from 'react-native-paper/lib/typescript/styles/colors';
 const { width, height } = Dimensions.get("window");
+const AnimatedTouchable = Animated.createAnimatedComponent(TouchableOpacity);
 
 const {
   Value,
@@ -53,19 +65,22 @@ function runTiming(clock, value, dest) {
     state.position,
   ]);
 }
+
 class MusicApp extends Component {
   state = {
     login: true,
-    username: "random",
+    username: "Shreya",
     password: "123",
+    is_driver: false,
   };
 
-  constructor() {
-    super();
+  toggleLogin = () => {
+    console.log("mali")
+  }
 
-    this.buttonOpacity = new Value(1);
+    buttonOpacity = new Value(1);
 
-    this.onStateChange = event([
+    onStateChange = event([
       {
         nativeEvent: ({ state }) =>
           block([
@@ -77,7 +92,7 @@ class MusicApp extends Component {
       },
     ]);
 
-    this.onCloseState = event([
+    onCloseState = event([
       {
         nativeEvent: ({ state }) =>
           block([
@@ -89,52 +104,45 @@ class MusicApp extends Component {
       },
     ]);
 
-    this.buttonY = interpolate(this.buttonOpacity, {
+    buttonY = interpolate(this.buttonOpacity, {
       inputRange: [0, 1],
       outputRange: [100, 0],
       extrapolate: Extrapolate.CLAMP,
     });
 
-    this.bgY = interpolate(this.buttonOpacity, {
+    bgY = interpolate(this.buttonOpacity, {
       inputRange: [0, 1],
       outputRange: [-height / 3 - 70, 0],
       extrapolate: Extrapolate.CLAMP,
     });
 
-    this.textInputZindex = interpolate(this.buttonOpacity, {
+    textInputZindex = interpolate(this.buttonOpacity, {
       inputRange: [0, 1],
       outputRange: [1, -1],
       extrapolate: Extrapolate.CLAMP,
     });
 
-    this.textInputY = interpolate(this.buttonOpacity, {
+    textInputY = interpolate(this.buttonOpacity, {
       inputRange: [0, 1],
       outputRange: [0, 100],
       extrapolate: Extrapolate.CLAMP,
     });
 
-    this.textInputOpacity = interpolate(this.buttonOpacity, {
+    textInputOpacity = interpolate(this.buttonOpacity, {
       inputRange: [0, 1],
       outputRange: [1, 0],
       extrapolate: Extrapolate.CLAMP,
     });
 
-    this.rotateCross = interpolate(this.buttonOpacity, {
+    rotateCross = interpolate(this.buttonOpacity, {
       inputRange: [0, 1],
       outputRange: [180, 360],
       extrapolate: Extrapolate.CLAMP,
     });
-  }
-
-  toggleLogin = (status) => {
-    console.log("toggle?");
-    // debug('stop clock')
-    this.setState({ login: status });
-  };
 
   render() {
     return (
-      <View
+      <View 
         style={{
           flex: 1,
           backgroundColor: "white",
@@ -162,40 +170,37 @@ class MusicApp extends Component {
           </Svg>
         </Animated.View>
         <View style={{ height: height / 3, justifyContent: "center" }}>
-          <TouchableHighlight onClick={() => toggleLogin(true)}>
-          <TapGestureHandler
-            onHandlerStateChange={this.onStateChange} 
-          >
-            <Animated.View 
-              style={{
-                ...styles.button,
-                opacity: this.buttonOpacity,
-                transform: [{ translateY: this.buttonY }],
-              }}
+          <TouchableHighlight onPress={ () => console.log("mari") }>
+            <TapGestureHandler
+              onHandlerStateChange={this.onStateChange}
+              onGestureEvent={(event) => console.log("ob",event)}
             >
-              <Text style={{ fontSize: 20, fontWeight: "bold" }}>SIGN IN</Text>
-            </Animated.View>
-          </TapGestureHandler>
-          </TouchableHighlight>
-          <TouchableHighlight onClick={() => toggleLogin(false)}>
-          <TapGestureHandler
-            onHandlerStateChange={this.onStateChange}
-          >
-            <Animated.View
-              style={{
-                ...styles.button,
-                backgroundColor: "#2E71DC",
-                opacity: this.buttonOpacity,
-                transform: [{ translateY: this.buttonY }],
-              }}
-            >
-              <Text
-                style={{ fontSize: 20, fontWeight: "bold", color: "white" }}
+              <Animated.View
+                style={{
+                  ...styles.button,
+                  opacity: this.buttonOpacity,
+                  transform: [{ translateY: this.buttonY }],
+                }}
               >
-                SIGN UP
-              </Text>
-            </Animated.View>
-          </TapGestureHandler>
+                <AnimatedTouchable onPress={() => console.log("yolo")}>
+                  <Text style={{ fontSize: 20 }}>SIGN IN</Text>
+                </AnimatedTouchable>
+              </Animated.View>
+            </TapGestureHandler>
+          </TouchableHighlight>
+          <TouchableHighlight>
+            <TapGestureHandler onHandlerStateChange={this.onStateChange}>
+              <Animated.View
+                style={{
+                  ...styles.button,
+                  backgroundColor: "#2E71DC",
+                  opacity: this.buttonOpacity,
+                  transform: [{ translateY: this.buttonY }],
+                }}
+              >
+                <Text style={{ fontSize: 20, color: "white" }}>SIGN UP</Text>
+              </Animated.View>
+            </TapGestureHandler>
           </TouchableHighlight>
           <Animated.View
             style={{
@@ -235,14 +240,15 @@ class MusicApp extends Component {
               onChangeText={(value) => this.setState({ password: value })}
             />
             <Animated.View style={styles.button}>
-              <View
-              >
+              <View>
                 <Button
                   // onPress={() => this.props.getNav(this.state)}
-                  onPress={(e) => this.props.handleLoginOrSignup(e, this.state)}
+                  onPress={(e) =>
+                    this.props.handleLoginOrSignup(e, this.state, "driver")
+                  }
                   style={{ fontSize: 20, fontWeight: "bold" }}
                 >
-                  Book Now!
+                  Enter
                 </Button>
               </View>
             </Animated.View>

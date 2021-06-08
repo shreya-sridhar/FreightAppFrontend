@@ -25,15 +25,15 @@ function DrawerFunc(props) {
       <Drawer.Navigator initialRouteName="HomeMap">
       <Drawer.Screen name="Book A Truck"  component={HomeMap} initialParams={{ catId: props }} />
       {/* screen: (props) => <MyNotificationsScreen {...props} propName={val1} /> */}
-        <Drawer.Screen name="Earnings" component={Earnings} initialParams={{ catId: props }} />
+        <Drawer.Screen name="Earnings/Spends" component={Earnings} initialParams={{ catId: props }} />
         {/* <Drawer.Screen name="FindPlaces" component={FindPlaces} /> */}
         <Drawer.Screen name="History" component={History} initialParams={{ catId: props}} />
-        <Drawer.Screen name="BarCode" component={BarCode} initialParams={{ catId: props}} />
+        {/* <Drawer.Screen name="BarCode" component={BarCode} initialParams={{ catId: props}} /> */}
         <Drawer.Screen name="DeliveryCheck" component={DeliveryCheck} initialParams={{ catId: props}} />
-        <Drawer.Screen name="Scan QR Codes" component={BarCodeScanner} initialParams={{ catId: props}} />
+        {/* <Drawer.Screen name="Scan QR Codes" component={BarCodeScanner} initialParams={{ catId: props}} /> */}
         <Drawer.Screen name="Choose Payment Options" component={Wallet} initialParams={{ catId: props }} />
         <Drawer.Screen name="End Ride" component={Feedback} initialParams={{ catId: props }} />
-        <Drawer.Screen name="Inventory Tracking" component={Inventory} initialParams={{ catId: props }} />
+        {/* <Drawer.Screen name="Inventory Tracking" component={Inventory} initialParams={{ catId: props }} /> */}
         <Drawer.Screen name="Profile" component={Profile} initialParams={{ catId: props }} />
       </Drawer.Navigator>
     </NavigationContainer>

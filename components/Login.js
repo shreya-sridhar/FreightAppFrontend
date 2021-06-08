@@ -29,6 +29,7 @@ export default class App extends React.Component {
   state = {
     user: {},
     error: "",
+    profile:""
   };
 
   async _loadAssetsAsync() {
@@ -77,8 +78,9 @@ export default class App extends React.Component {
   //     });
   // };
 
-  handleLoginOrSignup = (e, userInfo) => {
+  handleLoginOrSignup = async (e, userInfo, profile) => {
     console.log("wru");
+    await this.setState({profile:profile})
     if (userInfo.login === true) {
       this.handleLogin(e, userInfo);
     } else {
@@ -142,7 +144,7 @@ export default class App extends React.Component {
           );
           console.log("user",this.state.user)
           this.props.getNav(this.state.user)
-          this.props.routerprops.navigation.navigate("HomeMap",{users:this.props.users,user:this.state.user})
+          this.props.routerprops.navigation.navigate("HomeMap",{users:this.props.users,user:this.state.user, profile: this.state.profile})
         } catch (e) {
           // saving error
           console.log(jsonValue, "erorr");

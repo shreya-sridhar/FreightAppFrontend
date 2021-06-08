@@ -48,9 +48,10 @@ export default function App() {
       {/* <Text>Your expo push token: {expoPushToken}</Text> */}
       <View style={{ alignItems: 'center', justifyContent: 'center' }}>
         <Text>Your Booking is confirmed for </Text>
-        <Text>Title: {notification && notification.request.content.title} </Text>
-        <Text>Body: {notification && notification.request.content.body}</Text>
-        <Text>Data: {notification && JSON.stringify(notification.request.content.data)}</Text>
+        <Text>Origin: Seattle</Text>
+        <Text>Destination: Bellevue</Text>
+        <Text>Bill : $50</Text>
+        <Text>Your driver Sam is on the way</Text>
       </View>
       <Button
         title="Get Details"
@@ -67,8 +68,8 @@ async function sendPushNotification(expoPushToken) {
   const message = {
     to: expoPushToken,
     sound: 'default',
-    title: 'Ride Details',
-    body: 'And here is the body!',
+    title: 'Booking Confirmed',
+    body: 'Your driver Sam is on the way!',
     data: { someData: 'goes here' },
   };
 
@@ -99,7 +100,7 @@ async function registerForPushNotificationsAsync() {
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
     console.log(token);
-    // console.log(props)
+    // console.log(this.props)
   } else {
     alert('Must use physical device for Push Notifications');
   }
@@ -112,6 +113,6 @@ async function registerForPushNotificationsAsync() {
       lightColor: '#FF231F7C',
     });
   }
-
   return token;
 }
+

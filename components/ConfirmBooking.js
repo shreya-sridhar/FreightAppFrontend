@@ -162,9 +162,9 @@ class AnimatedMarkers extends React.Component {
     console.log("drivercoord", this.state.driverCoordinates, "drivercoord end");
     return (
       <View style={styles.container}>
-        {this.state.status && (
-          <Button title="yo" onPress={() => this.removeButton} />
-        )}
+        {/* {this.state.status && (
+          <Button title="CANCEL" onPress={() => this.removeButton} />
+        )} */}
         <MapView
           style={styles.map}
           provider={PROVIDER_GOOGLE}
@@ -173,6 +173,7 @@ class AnimatedMarkers extends React.Component {
           loadingEnabled
           region={this.getMapRegion()}
         >
+          
           <Polyline
             coordinates={this.state.routeCoordinates}
             strokeWidth={5}
@@ -181,7 +182,7 @@ class AnimatedMarkers extends React.Component {
           <Polyline
             coordinates={this.state.driverCoordinates}
             strokeWidth={15}
-            strokeColor={"yellow"}
+            strokeColor={"red"}
           />
           <Marker.Animated
             ref={(marker) => {

@@ -16,16 +16,18 @@ export default class History extends Component {
       return (<ScrollView>
         <Text style={{fontSize:20, textAlign:"center", marginTop:30}}>Ride History</Text>
       {this.state.rides.map((ride) => (
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('BarCode',{ride_track_id:ride.id})}>
+          <TouchableOpacity>
           <CardTen title={`${ride.pickup_location} ---> ${ride.drop_location}`}
           subTitle={ride.drop_location}
           price={ride.actual_bill}
           star={3}
           starsFor={ride.pickup_time}>
           </CardTen>
-          <View style={{width:100,justifyContent: 'center',alignItems: 'center',marginLeft:240}}>
+          <View style={{width:"100%",justifyContent: 'center',alignItems: 'center'}}>
           <Button style={{width:50,justifyContent: 'center',alignItems: 'center'}} onPress={() => this.props.navigation.navigate('BarCode',{ride_track_id:ride.id})} title="Add Tracking"/>
-          <Button style={{width:50,justifyContent: 'center',alignItems: 'center'}} onPress={() => this.props.navigation.navigate('DeliveryCheck',{ride_track_id:ride.id})} title="Check Status"/>
+          </View>
+          <View style={{width:"100%",justifyContent: 'center',alignItems: 'center'}}>
+          <Button style={{justifyContent: 'center',alignItems: 'center'}} onPress={() => this.props.navigation.navigate('DeliveryCheck',{ride_track_id:ride.id})} title="Check Status"/>
           </View>
           </TouchableOpacity>
       ))}
@@ -36,5 +38,7 @@ export default class History extends Component {
 
 
  
+
+
 
 

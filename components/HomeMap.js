@@ -9,6 +9,8 @@ import {
   View,
   StyleSheet,
 } from "react-native";
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
+import { faLocation } from '@fortawesome/free-solid-svg-icons'
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import img from "C:/Users/shrey/FreightApp/assets/images/comfort.jpeg";
 import img1 from "C:/Users/shrey/FreightApp/assets/images/truck2.png";
@@ -26,43 +28,43 @@ const cars = [
   {
     id: "0",
     type: "UberX",
-    latitude: 37.7749,
-    longitude: -122.4194,
+    latitude: 47.9790,
+    longitude: -122.2021,
     heading: 47,
   },
   {
     id: "1",
     type: "Comfort",
-    latitude: 37.3382,
-    longitude: -121.8863,
+    latitude: 47.6062,
+    longitude: -122.3321,
     heading: 190,
   },
   {
     id: "2",
     type: "UberXL",
-    latitude: 32.7157,
-    longitude: -117.1611,
+    latitude:47.9445,
+    longitude: -122.3046,
     heading: 99,
   },
   {
     id: "3",
     type: "Comfort",
-    latitude: 37.3861,
-    longitude: -122.0839,
+    latitude: 47.9129,
+    longitude: -122.0982,
     heading: 120,
   },
   {
     id: "4",
     type: "Comfort",
-    latitude: 37.5485,
-    longitude: -121.9886,
+    latitude: 47.8601,
+    longitude: -122.2043,
     heading: 120,
   },
   {
     id: "5",
     type: "Comfort",
-    latitude: 37.5630,
-    longitude: -122.3255,
+    latitude: 47.6769,
+    longitude: -122.2060,
     heading: 120,
   },
   {
@@ -82,8 +84,6 @@ export default class HomeMap extends React.Component {
     searchFocused: false,
     destination: "",
     origin: "",
-    // vehicle_type: "Standard Truck (6ft)",
-    // users: this.props.users,
     pickup_date: null,
     pickup_time: null,
     start_lat: null,
@@ -187,30 +187,19 @@ export default class HomeMap extends React.Component {
     console.log("lat",this.state.start_lat)
     await this.props.route.params.catId.getRideData(this.state)
     await this.props.route.params.catId.findDriver()
-    console.log(this.props)
+    console.log(this.props,"props are")
      this.props.route.params.catId.navigation.navigate("Booking")
   };
 
   render() {
     return (
       <>
-        <View>
-          {/* <Text>{this.props.users[0].name}</Text> */}
-          <Button title="Turn on Location" onPress = {() => this.props.route.params.catId.navigation.navigate("LiveLocation")} name="location" style={{ fontSize: 25 }} />
-          <Text>
-            {this.state.switchValue
-              ? "You are now a Driver"
-              : "You are now a Passenger"}
-          </Text>
-          <Switch
-            style={{ marginTop: 30 }}
-            onValueChange={this.toggleSwitch}
-            value={this.state.switchValue}
-          />
+      <View style={{top:30, width:"100%", justifyItems:"center"}}>
+        <Button title="Drive & Deliver" onPress = {() => this.props.route.params.catId.navigation.navigate("LiveLocation")} name="location"/>
         </View>
         <MapView
-          style={{ width: "100%",height: "56%" , position: "absolute",
-          top: Platform.select({ ios: 20, android: 150 })}}
+          style={{ width: "100%",height: "70%" , position: "absolute",
+          top: Platform.select({ ios: 180, android: 190 })}}
           provider={PROVIDER_GOOGLE}
           showsUserLocation={true}
           initialRegion={{
@@ -262,7 +251,7 @@ export default class HomeMap extends React.Component {
 
         </MapView>
         <View style={styles.bottom} onPress={() => this.getDate}>
-          <RaspberryStrip />
+          {/* <RaspberryStrip /> */}
           <Button title="CONTINUE" onPress={this.combined} />
         </View>
         <View
