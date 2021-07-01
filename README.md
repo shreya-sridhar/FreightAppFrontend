@@ -12,3 +12,5 @@ A mobile application that enables users book trucks to transport goods as well a
 
 Technologies : React-Native, Javascript, Ruby Backend, Google Cloud API,
 Postgresql, Android Dev tools, Mobile App development, Azure Devops tools
+
+<img src="https://user-images.githubusercontent.com/19844780/124073603-08a34780-d9f7-11eb-873f-11ea22b816b9.PNG" width="350">
