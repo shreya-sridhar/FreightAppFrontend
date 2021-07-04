@@ -19,9 +19,16 @@ Home Page/ Book A Ride
 
 Google Autocomplete API to search for pickup & dropoff locations
 <img src="https://user-images.githubusercontent.com/19844780/124227811-1b358380-dac0-11eb-8670-4085d9d2ac08.PNG" width="350">
+Choose pickup date/ time
 <img src="https://user-images.githubusercontent.com/19844780/124227818-1cff4700-dac0-11eb-9cca-6909223cc14b.PNG" width="350">
+
+Truck Selection & Confirm Booking Page
 <img src="https://user-images.githubusercontent.com/19844780/124227825-1ec90a80-dac0-11eb-8712-f94f0df04810.PNG" width="350">
+
+Booking Confirmation + Driver Allocation
 <img src="https://user-images.githubusercontent.com/19844780/124227829-1ffa3780-dac0-11eb-957b-ecef929fdaaf.PNG" width="350">
+
+
 <img src="https://user-images.githubusercontent.com/19844780/124227835-212b6480-dac0-11eb-95c6-26e17b501e4f.PNG" width="350">
 <img src="https://user-images.githubusercontent.com/19844780/124227842-22f52800-dac0-11eb-974d-eda00b353d88.PNG" width="350">
 <img src="https://user-images.githubusercontent.com/19844780/124227848-24265500-dac0-11eb-8d71-c2199fc26898.PNG" width="350">
