@@ -13,6 +13,8 @@ A mobile application that enables users book trucks to transport goods as well a
 Technologies : React-Native, Javascript, Ruby Backend, Google Cloud API,
 Postgresql, Android Dev tools, Mobile App development, Azure Devops tools
 
+Home Page/ Book A Ride 
+(shows nearby serviceable trucks, picks up gps location from the mobile device)
 <img src="https://user-images.githubusercontent.com/19844780/124073603-08a34780-d9f7-11eb-873f-11ea22b816b9.PNG" width="350">
 
 <img src="https://user-images.githubusercontent.com/19844780/124227811-1b358380-dac0-11eb-8670-4085d9d2ac08.PNG" width="350">
