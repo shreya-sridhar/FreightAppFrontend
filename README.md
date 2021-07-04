@@ -1,4 +1,4 @@
-### 🚚 FreightNot  [FrontendCode](https://github.com/shreya-sridhar/FreightApp) | [BackendCode](https://github.com/shreya-sridhar/frieghtbackend) | [Video Demo]() 
+### 🚚 FreightNot  [FrontendCode](https://github.com/shreya-sridhar/FreightApp) | [BackendCode](https://github.com/shreya-sridhar/frieghtbackend) | [Video Demo](http://freightvideo.shreyasridhar.com/) 
 
 A mobile application that enables users book trucks to transport goods as well as track their inventory upon delivery. The application includes a unique customer and driver interface. To know more about the working of the app, please watch a video overview - 
 
