@@ -17,6 +17,7 @@ Home Page/ Book A Ride
 (shows nearby serviceable trucks, picks up gps location from the mobile device)
 <img src="https://user-images.githubusercontent.com/19844780/124073603-08a34780-d9f7-11eb-873f-11ea22b816b9.PNG" width="350">
 
+Google Autocomplete API to search for pickup & dropoff locations
 <img src="https://user-images.githubusercontent.com/19844780/124227811-1b358380-dac0-11eb-8670-4085d9d2ac08.PNG" width="350">
 <img src="https://user-images.githubusercontent.com/19844780/124227818-1cff4700-dac0-11eb-9cca-6909223cc14b.PNG" width="350">
 <img src="https://user-images.githubusercontent.com/19844780/124227825-1ec90a80-dac0-11eb-8712-f94f0df04810.PNG" width="350">
