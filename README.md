@@ -28,12 +28,22 @@ Truck Selection & Confirm Booking Page
 Booking Confirmation + Driver Allocation
 <img src="https://user-images.githubusercontent.com/19844780/124227829-1ffa3780-dac0-11eb-957b-ecef929fdaaf.PNG" width="350">
 
-
+QR Code Tracking
 <img src="https://user-images.githubusercontent.com/19844780/124227835-212b6480-dac0-11eb-95c6-26e17b501e4f.PNG" width="350">
+
+End Ride
 <img src="https://user-images.githubusercontent.com/19844780/124227842-22f52800-dac0-11eb-974d-eda00b353d88.PNG" width="350">
+
+Payment Options
 <img src="https://user-images.githubusercontent.com/19844780/124227848-24265500-dac0-11eb-8d71-c2199fc26898.PNG" width="350">
+
+Spends Graph
 <img src="https://user-images.githubusercontent.com/19844780/124227852-25578200-dac0-11eb-8094-7d0b90c8b7c4.PNG" width="350">
+
+Landing Page
 <img src="https://user-images.githubusercontent.com/19844780/124227856-2688af00-dac0-11eb-9406-5612ccc8dcb2.PNG" width="350">
+
+Login/Signup Page
 <img src="https://user-images.githubusercontent.com/19844780/124227860-27214580-dac0-11eb-9d31-15977a208753.PNG" width="350">
 
 
